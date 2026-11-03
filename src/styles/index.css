@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+@theme {
+  --color-canvas-cream: #FBFAF7;
+  --color-canvas-subtle: #F7F5F0;
+  --color-surface-white: #FFFFFF;
+  --color-border-subtle: #E9E6DF;
+  --color-ink: #1E293B;
+  --color-ink-muted: #64748B;
+  
+  --color-primary: #00685F;
+  --color-primary-accent: #0D9488;
+  --color-mint: #2DD4BF;
+  --color-secondary: #EA580C;
+  --color-terracotta: #EA580C;
+  
+  --color-sage-soft: #EEF3E7;
+  --color-terracotta-soft: #FCE7D9;
+  
+  --font-display: "Newsreader", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  
+  --shadow-card: 0 2px 8px -2px rgba(30, 41, 59, 0.04), 0 1px 3px -1px rgba(30, 41, 59, 0.02);
+  --shadow-hover: 0 12px 24px -6px rgba(30, 41, 59, 0.06), 0 4px 10px -2px rgba(30, 41, 59, 0.03);
+  --shadow-modal: 0 24px 48px -12px rgba(30, 41, 59, 0.08), 0 8px 16px -4px rgba(30, 41, 59, 0.04);
+}
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  background-color: var(--color-canvas-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-editorial {
+  font-family: var(--font-display);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-canvas-subtle);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-subtle);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-ink-muted);
+}
+
+/* Print Styles for autonomous editorial reports */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #111111 !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  @page {
+    size: A4 portrait;
+    margin: 1.5cm;
+  }
+  .page-break {
+    page-break-after: always;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

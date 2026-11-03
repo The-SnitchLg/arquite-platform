@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+
+<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&amp;family=Plus+Jakarta+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"on-primary-container":"#f4fffc","on-secondary-container":"#571a00","surface-container":"#e7eeff","surface-container-low":"#f0f3ff","surface-white":"#FFFFFF","tertiary":"#00685c","inverse-on-surface":"#ecf1ff","surface-container-lowest":"#ffffff","primary-fixed-dim":"#6bd8cb","surface-tint":"#006a61","surface-container-high":"#dee8ff","on-primary-fixed":"#00201d","surface":"#f9f9ff","canvas-cream":"#FBFAF7","on-tertiary-fixed-variant":"#005047","surface-dim":"#cfdaf2","surface-container-highest":"#d8e3fb","canvas-subtle":"#F7F5F0","error":"#ba1a1a","on-secondary":"#ffffff","outline-variant":"#bcc9c6","on-tertiary-container":"#f4fffb","inverse-surface":"#263143","sage-soft":"#EEF3E7","error-container":"#ffdad6","on-surface":"#111c2d","on-tertiary":"#ffffff","on-primary":"#ffffff","background":"#f9f9ff","outline":"#6d7a77","primary":"#00685f","tertiary-fixed-dim":"#3cddc7","on-error":"#ffffff","on-secondary-fixed-variant":"#7f2b00","on-secondary-fixed":"#370e00","terracotta-tint":"#FCE7D9","surface-bright":"#f9f9ff","tertiary-container":"#008375","text-muted":"#64748B","secondary":"#a73a00","tertiary-fixed":"#62fae3","primary-fixed":"#89f5e7","surface-variant":"#d8e3fb","on-primary-fixed-variant":"#005049","secondary-fixed-dim":"#ffb599","on-background":"#111c2d","secondary-container":"#fd651e","on-tertiary-fixed":"#00201c","on-surface-variant":"#3d4947","secondary-fixed":"#ffdbce","border-subtle":"#E9E6DF","inverse-primary":"#6bd8cb","primary-container":"#008378","on-error-container":"#93000a"},borderRadius:{DEFAULT:"0.25rem",lg:"0.5rem",xl:"0.75rem",full:"9999px"},spacing:{"space-md":"1rem","space-sm":"0.5rem","space-xl":"2.5rem",gutter:"1.5rem","margin-tablet":"2rem","space-xs":"0.25rem","space-2xl":"4rem","space-lg":"1.5rem","margin-mobile":"1.25rem","gutter-mobile":"1rem",margin:"3rem"},fontFamily:{"headline-sm":["Plus Jakarta Sans"],"display-hero":["Newsreader"],"body-lg":["Plus Jakarta Sans"],"title-md":["Plus Jakarta Sans"],"headline-md":["Plus Jakarta Sans"],"label-md":["Plus Jakarta Sans"],"body-md":["Plus Jakarta Sans"],"display-hero-mobile":["Newsreader"],"headline-xl":["Newsreader"],"headline-lg":["Newsreader"],"headline-xl-mobile":["Newsreader"],"label-sm":["Plus Jakarta Sans"],"body-sm":["Plus Jakarta Sans"]},fontSize:{"headline-sm":["20px",{lineHeight:"28px",letterSpacing:"0em",fontWeight:"600"}],"display-hero":["56px",{lineHeight:"64px",letterSpacing:"-0.02em",fontWeight:"400"}],"body-lg":["18px",{lineHeight:"28px",letterSpacing:"0em",fontWeight:"400"}],"title-md":["16px",{lineHeight:"24px",letterSpacing:"0.005em",fontWeight:"600"}],"headline-md":["24px",{lineHeight:"32px",letterSpacing:"-0.01em",fontWeight:"600"}],"label-md":["12px",{lineHeight:"16px",letterSpacing:"0.04em",fontWeight:"600"}],"body-md":["15px",{lineHeight:"24px",letterSpacing:"0em",fontWeight:"400"}],"display-hero-mobile":["36px",{lineHeight:"44px",letterSpacing:"-0.01em",fontWeight:"400"}],"headline-xl":["40px",{lineHeight:"48px",letterSpacing:"-0.015em",fontWeight:"400"}],"headline-lg":["32px",{lineHeight:"40px",letterSpacing:"-0.01em",fontWeight:"500"}],"headline-xl-mobile":["28px",{lineHeight:"36px",letterSpacing:"-0.01em",fontWeight:"400"}],"label-sm":["11px",{lineHeight:"14px",letterSpacing:"0.05em",fontWeight:"600"}],"body-sm":["13px",{lineHeight:"20px",letterSpacing:"0.005em",fontWeight:"400"}]}}}};</script></head><body class="bg-canvas-cream font-body-md text-body-md text-on-surface antialiased selection:bg-sage-soft selection:text-primary"><header class="fixed top-0 w-full z-50 bg-canvas-cream/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.03)]"><div class="h-20 max-w-[1320px] mx-auto px-margin-mobile md:px-margin-tablet lg:px-margin flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-sm shrink-0"><span class="font-display-hero text-headline-md tracking-tight text-on-surface">ARQUITÉ</span><span class="hidden sm:inline-block w-1.5 h-1.5 rounded-full bg-outline-variant/60"></span><span class="hidden sm:inline-block font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant">Estudio de Dirección</span></div><nav class="hidden xl:flex items-center gap-space-xs font-body-sm text-body-sm" data-active-classes="bg-sage-soft text-primary font-semibold rounded-full px-3.5 py-1.5"><a class="px-3.5 py-1.5 rounded-full text-on-surface-variant hover:text-on-surface transition-colors duration-200" data-path="panorama" href="#">Panorama</a><a class="px-3.5 py-1.5 rounded-full text-on-surface-variant hover:text-on-surface transition-colors duration-200" data-path="mi-diamante" href="#">Mi Diamante</a><a class="px-3.5 py-1.5 rounded-full text-on-surface-variant hover:text-on-surface transition-colors duration-200" data-path="siete-umbrales" href="#">Siete Umbrales</a><a class="px-3.5 py-1.5 rounded-full text-on-surface-variant hover:text-on-surface transition-colors duration-200" data-path="cartas-al-futuro" href="#">Cartas al Futuro</a><a class="px-3.5 py-1.5 rounded-full text-on-surface-variant hover:text-on-surface transition-colors duration-200" data-path="informe-dossier" href="#">Informe Dossier</a><a aria-current="page" class="transition-colors duration-200 bg-sage-soft text-primary font-semibold rounded-full px-3.5 py-1.5" data-path="panel-administrador" href="#">Panel Administrador</a></nav><div class="flex items-center gap-space-md shrink-0"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-canvas-cream min-h-screen"><div class="flex flex-col w-full">
+<div class="w-full max-w-[1320px] mx-auto px-margin-mobile md:px-margin-tablet lg:px-margin py-space-xl space-y-space-xl">
+<!-- Encabezado Sobrio y Control de Búsqueda -->
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-lg">
+<div class="space-y-space-xs">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant">Estudio de Dirección</span>
+</div>
+<h1 class="font-display-hero text-headline-xl text-on-surface tracking-tight">Panel de Administración</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-xl">
+          Supervisión pausada del progreso, expedientes y dossiers generados en cada proceso consultivo.
+        </p>
+</div>
+<!-- Filtro y Buscador Rápido -->
+<div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-space-sm bg-surface-white p-2 rounded-xl shadow-sm">
+<div class="relative flex-1 sm:w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[18px]">search</span>
+<input class="w-full pl-9 pr-3 py-2 bg-transparent text-on-surface font-body-sm text-body-sm focus:outline-none placeholder:text-outline/70" id="searchInput" placeholder="Buscar por nombre o referencia..." type="text"/>
+</div>
+<div class="h-6 w-[1px] bg-canvas-subtle hidden sm:block"></div>
+<select class="bg-canvas-subtle/80 hover:bg-canvas-subtle text-on-surface font-body-sm text-body-sm px-3.5 py-2 rounded-lg focus:outline-none cursor-pointer" id="moduleFilter">
+<option value="todos">Todos los módulos</option>
+<option value="siete-umbrales">Siete Umbrales</option>
+<option value="mi-diamante">Mi Diamante</option>
+<option value="cartas-futuro">Cartas al Futuro</option>
+</select>
+<select class="bg-canvas-subtle/80 hover:bg-canvas-subtle text-on-surface font-body-sm text-body-sm px-3.5 py-2 rounded-lg focus:outline-none cursor-pointer" id="statusFilter">
+<option value="todos">Todos los estados</option>
+<option value="listo">Informe Listo</option>
+<option value="curso">En Curso</option>
+<option value="revision">En Revisión</option>
+</select>
+</div>
+</div>
+<!-- 3 Tarjetas de Resumen Amplias y Claras -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
+<!-- Métrica 1 -->
+<div class="bg-surface-white rounded-xl p-space-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col justify-between relative overflow-hidden group">
+<div class="flex items-start justify-between">
+<div class="space-y-1">
+<span class="font-label-md text-label-md uppercase tracking-wider text-text-muted">Alcance Global</span>
+<div class="font-display-hero text-headline-xl text-on-surface mt-1">42</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Participantes activos</div>
+</div>
+<div class="w-10 h-10 rounded-full bg-sage-soft flex items-center justify-center text-primary group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[22px]">group</span>
+</div>
+</div>
+<div class="pt-space-md mt-space-md border-t-0 flex items-center gap-2 font-label-sm text-label-sm text-primary">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+<span>4 nuevas incorporaciones este mes</span>
+</div>
+</div>
+<!-- Métrica 2 -->
+<div class="bg-surface-white rounded-xl p-space-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col justify-between relative overflow-hidden group">
+<div class="flex items-start justify-between">
+<div class="space-y-1">
+<span class="font-label-md text-label-md uppercase tracking-wider text-text-muted">Documentación Concluida</span>
+<div class="font-display-hero text-headline-xl text-primary mt-1">29</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Informes listos para descarga</div>
+</div>
+<div class="w-10 h-10 rounded-full bg-sage-soft flex items-center justify-center text-primary group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[22px]">verified</span>
+</div>
+</div>
+<div class="pt-space-md mt-space-md flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span>Listos para compartir con directores</span>
+</div>
+</div>
+<!-- Métrica 3 -->
+<div class="bg-surface-white rounded-xl p-space-lg shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col justify-between relative overflow-hidden group">
+<div class="flex items-start justify-between">
+<div class="space-y-1">
+<span class="font-label-md text-label-md uppercase tracking-wider text-text-muted">Procesos en Marcha</span>
+<div class="font-display-hero text-headline-xl text-secondary mt-1">13</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Evaluaciones en curso</div>
+</div>
+<div class="w-10 h-10 rounded-full bg-terracotta-tint flex items-center justify-center text-secondary group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[22px]">pending_actions</span>
+</div>
+</div>
+<div class="pt-space-md mt-space-md flex items-center gap-2 font-label-sm text-label-sm text-secondary">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+<span>3 consultas agendadas para esta semana</span>
+</div>
+</div>
+</div>
+<!-- Contenedor Principal: Tabla Diáfana y Registro -->
+<div class="bg-surface-white rounded-xl shadow-sm overflow-hidden">
+<div class="p-space-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-sm bg-surface-white">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Registros y Expedientes</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Selecciona un registro para revisar el sumario o descargar el informe ejecutivo.</p>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm text-text-muted uppercase">Vista estándar</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+<span class="font-label-sm text-label-sm text-primary font-semibold">6 de 42 mostrados</span>
+</div>
+</div>
+<!-- Tabla Limpia -->
+<div class="overflow-x-auto w-full">
+<table class="w-full text-left font-body-sm text-body-sm">
+<thead class="bg-canvas-subtle/60 text-on-surface-variant font-label-md text-label-md uppercase tracking-wider">
+<tr>
+<th class="py-3.5 px-space-lg font-semibold" scope="col">Participante / Cargo</th>
+<th class="py-3.5 px-space-md font-semibold" scope="col">Módulo Vigente</th>
+<th class="py-3.5 px-space-md font-semibold" scope="col">Estado</th>
+<th class="py-3.5 px-space-md font-semibold" scope="col">Última Actualización</th>
+<th class="py-3.5 px-space-lg text-right font-semibold" scope="col">Acciones</th>
+</tr>
+</thead>
+<tbody class="divide-none" id="tableBody">
+<!-- Registro 1 -->
+<tr class="hover:bg-canvas-subtle/50 transition-colors cursor-pointer group" onclick="openDrawer('Helena Valls', 'Directora de Estrategia', 'Siete Umbrales', 'Umbral 5 completado', '12 Mayo 2025', 'Listo', '94% completado. Diagnóstico de arquitectura de marca finalizado con éxito.')">
+<td class="py-4 px-space-lg">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-sage-soft text-primary font-semibold flex items-center justify-center shrink-0">
+                    HV
+                  </div>
+<div>
+<div class="font-title-md text-title-md text-on-surface group-hover:text-primary transition-colors">Helena Valls</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Directora de Estrategia · Estudio Norte</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-space-md">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full bg-canvas-subtle font-label-sm text-label-sm text-on-surface">
+                  Siete Umbrales
+                </span>
+</td>
+<td class="py-4 px-space-md">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sage-soft text-primary font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                  Informe Listo
+                </span>
+</td>
+<td class="py-4 px-space-md text-on-surface-variant">
+                12 Mayo, 2025
+              </td>
+<td class="py-4 px-space-lg text-right" onclick="event.stopPropagation()">
+<div class="flex items-center justify-end gap-2">
+<button class="px-3 py-1.5 rounded-lg bg-canvas-subtle hover:bg-sage-soft text-on-surface hover:text-primary font-label-sm text-label-sm transition-colors" onclick="openDrawer('Helena Valls', 'Directora de Estrategia', 'Siete Umbrales', 'Umbral 5 completado', '12 Mayo 2025', 'Listo', '94% completado. Diagnóstico de arquitectura de marca finalizado con éxito.')">
+                    Ver expediente
+                  </button>
+<button class="p-1.5 rounded-lg text-primary hover:bg-sage-soft transition-colors" onclick="triggerDownload('Helena Valls')" title="Descargar informe PDF">
+<span class="material-symbols-outlined text-[18px]">download</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Registro 2 -->
+<tr class="hover:bg-canvas-subtle/50 transition-colors cursor-pointer group" onclick="openDrawer('Mateo Benítez', 'Arquitecto Principal', 'Mi Diamante', 'Fase de síntesis', '10 Mayo 2025', 'En Curso', '72% completado. Cartografía de prioridades de taller en revisión directiva.')">
+<td class="py-4 px-space-lg">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-canvas-subtle text-on-surface-variant font-semibold flex items-center justify-center shrink-0">
+                    MB
+                  </div>
+<div>
+<div class="font-title-md text-title-md text-on-surface group-hover:text-primary transition-colors">Mateo Benítez</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Arquitecto Principal · Benítez &amp; Socios</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-space-md">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full bg-canvas-subtle font-label-sm text-label-sm text-on-surface">
+                  Mi Diamante
+                </span>
+</td>
+<td class="py-4 px-space-md">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-terracotta-tint text-secondary font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                  En Curso
+                </span>
+</td>
+<td class="py-4 px-space-md text-on-surface-variant">
+                10 Mayo, 2025
+              </td>
+<td class="py-4 px-space-lg text-right" onclick="event.stopPropagation()">
+<div class="flex items-center justify-end gap-2">
+<button class="px-3 py-1.5 rounded-lg bg-canvas-subtle hover:bg-sage-soft text-on-surface hover:text-primary font-label-sm text-label-sm transition-colors" onclick="openDrawer('Mateo Benítez', 'Arquitecto Principal', 'Mi Diamante', 'Fase de síntesis', '10 Mayo 2025', 'En Curso', '72% completado. Cartografía de prioridades de taller en revisión directiva.')">
+                    Ver expediente
+                  </button>
+<button class="p-1.5 rounded-lg text-outline-variant cursor-not-allowed" disabled="" title="Informe aún en generación">
+<span class="material-symbols-outlined text-[18px]">download</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Registro 3 -->
+<tr class="hover:bg-canvas-subtle/50 transition-colors cursor-pointer group" onclick="openDrawer('Clara Mendizábal', 'Socia Fundadora', 'Cartas al Futuro', 'Edición Epistolar III', '08 Mayo 2025', 'Listo', '100% completado. Tres misivas prospectivas depositadas y catalogadas.')">
+<td class="py-4 px-space-lg">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-sage-soft text-primary font-semibold flex items-center justify-center shrink-0">
+                    CM
+                  </div>
+<div>
+<div class="font-title-md text-title-md text-on-surface group-hover:text-primary transition-colors">Clara Mendizábal</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Socia Fundadora · Taller Mendizábal</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-space-md">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full bg-canvas-subtle font-label-sm text-label-sm text-on-surface">
+                  Cartas al Futuro
+                </span>
+</td>
+<td class="py-4 px-space-md">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sage-soft text-primary font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                  Informe Listo
+                </span>
+</td>
+<td class="py-4 px-space-md text-on-surface-variant">
+                08 Mayo, 2025
+              </td>
+<td class="py-4 px-space-lg text-right" onclick="event.stopPropagation()">
+<div class="flex items-center justify-end gap-2">
+<button class="px-3 py-1.5 rounded-lg bg-canvas-subtle hover:bg-sage-soft text-on-surface hover:text-primary font-label-sm text-label-sm transition-colors" onclick="openDrawer('Clara Mendizábal', 'Socia Fundadora', 'Cartas al Futuro', 'Edición Epistolar III', '08 Mayo 2025', 'Listo', '100% completado. Tres misivas prospectivas depositadas y catalogadas.')">
+                    Ver expediente
+                  </button>
+<button class="p-1.5 rounded-lg text-primary hover:bg-sage-soft transition-colors" onclick="triggerDownload('Clara Mendizábal')" title="Descargar informe PDF">
+<span class="material-symbols-outlined text-[18px]">download</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Registro 4 -->
+<tr class="hover:bg-canvas-subtle/50 transition-colors cursor-pointer group" onclick="openDrawer('Julián Arismendi', 'Director Creativo', 'Siete Umbrales', 'Umbral 2 en pausa', '04 Mayo 2025', 'En Curso', '30% completado. Sesión presencial de horizonte pospuesta a la próxima quincena.')">
+<td class="py-4 px-space-lg">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-canvas-subtle text-on-surface-variant font-semibold flex items-center justify-center shrink-0">
+                    JA
+                  </div>
+<div>
+<div class="font-title-md text-title-md text-on-surface group-hover:text-primary transition-colors">Julián Arismendi</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Director Creativo · Prisma Urbano</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-space-md">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full bg-canvas-subtle font-label-sm text-label-sm text-on-surface">
+                  Siete Umbrales
+                </span>
+</td>
+<td class="py-4 px-space-md">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-terracotta-tint text-secondary font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                  En Curso
+                </span>
+</td>
+<td class="py-4 px-space-md text-on-surface-variant">
+                04 Mayo, 2025
+              </td>
+<td class="py-4 px-space-lg text-right" onclick="event.stopPropagation()">
+<div class="flex items-center justify-end gap-2">
+<button class="px-3 py-1.5 rounded-lg bg-canvas-subtle hover:bg-sage-soft text-on-surface hover:text-primary font-label-sm text-label-sm transition-colors" onclick="openDrawer('Julián Arismendi', 'Director Creativo', 'Siete Umbrales', 'Umbral 2 en pausa', '04 Mayo 2025', 'En Curso', '30% completado. Sesión presencial de horizonte pospuesta a la próxima quincena.')">
+                    Ver expediente
+                  </button>
+<button class="p-1.5 rounded-lg text-outline-variant cursor-not-allowed" disabled="" title="Informe aún en generación">
+<span class="material-symbols-outlined text-[18px]">download</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Registro 5 -->
+<tr class="hover:bg-canvas-subtle/50 transition-colors cursor-pointer group" onclick="openDrawer('Valeria Sotomayor', 'Consultora de Diseño', 'Mi Diamante', 'Conclusión definitiva', '29 Abril 2025', 'Listo', '100% completado. Dossier encuadernado y entregable digital remitido.')">
+<td class="py-4 px-space-lg">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-sage-soft text-primary font-semibold flex items-center justify-center shrink-0">
+                    VS
+                  </div>
+<div>
+<div class="font-title-md text-title-md text-on-surface group-hover:text-primary transition-colors">Valeria Sotomayor</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Consultora de Diseño · Ábaco Group</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-space-md">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full bg-canvas-subtle font-label-sm text-label-sm text-on-surface">
+                  Mi Diamante
+                </span>
+</td>
+<td class="py-4 px-space-md">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sage-soft text-primary font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                  Informe Listo
+                </span>
+</td>
+<td class="py-4 px-space-md text-on-surface-variant">
+                29 Abril, 2025
+              </td>
+<td class="py-4 px-space-lg text-right" onclick="event.stopPropagation()">
+<div class="flex items-center justify-end gap-2">
+<button class="px-3 py-1.5 rounded-lg bg-canvas-subtle hover:bg-sage-soft text-on-surface hover:text-primary font-label-sm text-label-sm transition-colors" onclick="openDrawer('Valeria Sotomayor', 'Consultora de Diseño', 'Mi Diamante', 'Conclusión definitiva', '29 Abril 2025', 'Listo', '100% completado. Dossier encuadernado y entregable digital remitido.')">
+                    Ver expediente
+                  </button>
+<button class="p-1.5 rounded-lg text-primary hover:bg-sage-soft transition-colors" onclick="triggerDownload('Valeria Sotomayor')" title="Descargar informe PDF">
+<span class="material-symbols-outlined text-[18px]">download</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Registro 6 -->
+<tr class="hover:bg-canvas-subtle/50 transition-colors cursor-pointer group" onclick="openDrawer('Gonzalo Echeverría', 'CEO &amp; Socio', 'Siete Umbrales', 'Umbral 7 (Informe)', '24 Abril 2025', 'Listo', '100% completado. Diagnóstico de gobernanza y hoja de ruta a 3 años.')">
+<td class="py-4 px-space-lg">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-sage-soft text-primary font-semibold flex items-center justify-center shrink-0">
+                    GE
+                  </div>
+<div>
+<div class="font-title-md text-title-md text-on-surface group-hover:text-primary transition-colors">Gonzalo Echeverría</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">CEO &amp; Socio · Echeverría Corp</div>
+</div>
+</div>
+</td>
+<td class="py-4 px-space-md">
+<span class="inline-flex items-center px-2.5 py-1 rounded-full bg-canvas-subtle font-label-sm text-label-sm text-on-surface">
+                  Siete Umbrales
+                </span>
+</td>
+<td class="py-4 px-space-md">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sage-soft text-primary font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                  Informe Listo
+                </span>
+</td>
+<td class="py-4 px-space-md text-on-surface-variant">
+                24 Abril, 2025
+              </td>
+<td class="py-4 px-space-lg text-right" onclick="event.stopPropagation()">
+<div class="flex items-center justify-end gap-2">
+<button class="px-3 py-1.5 rounded-lg bg-canvas-subtle hover:bg-sage-soft text-on-surface hover:text-primary font-label-sm text-label-sm transition-colors" onclick="openDrawer('Gonzalo Echeverría', 'CEO &amp; Socio', 'Siete Umbrales', 'Umbral 7 (Informe)', '24 Abril 2025', 'Listo', '100% completado. Diagnóstico de gobernanza y hoja de ruta a 3 años.')">
+                    Ver expediente
+                  </button>
+<button class="p-1.5 rounded-lg text-primary hover:bg-sage-soft transition-colors" onclick="triggerDownload('Gonzalo Echeverría')" title="Descargar informe PDF">
+<span class="material-symbols-outlined text-[18px]">download</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Paginación Simple y Silenciosa -->
+<div class="p-space-md px-space-lg bg-canvas-subtle/40 flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<span>Mostrando 1 – 6 de 42 participantes</span>
+<div class="flex items-center gap-1">
+<button class="px-3 py-1 rounded bg-surface-white text-on-surface font-semibold shadow-sm">1</button>
+<button class="px-3 py-1 rounded hover:bg-surface-white text-on-surface-variant transition-colors">2</button>
+<button class="px-3 py-1 rounded hover:bg-surface-white text-on-surface-variant transition-colors">3</button>
+<span class="px-2">...</span>
+<button class="px-3 py-1 rounded hover:bg-surface-white text-on-surface-variant transition-colors">7</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Panel Lateral Desplegable para Detalle de Expediente -->
+<div class="fixed inset-0 bg-on-surface/20 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-300" id="drawerBackdrop" onclick="closeDrawer()">
+<div class="absolute right-0 top-0 bottom-0 w-full max-w-lg bg-surface-white shadow-2xl p-space-xl flex flex-col justify-between transform translate-x-full transition-transform duration-300 overflow-y-auto" id="drawerPanel" onclick="event.stopPropagation()">
+<div class="space-y-space-lg">
+<!-- Cabecera de Ficha -->
+<div class="flex items-start justify-between">
+<div class="space-y-1">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-primary">Ficha de Expediente</span>
+<h3 class="font-display-hero text-headline-lg text-on-surface" id="drawerName">Nombre</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant" id="drawerRole">Cargo / Organización</p>
+</div>
+<button class="p-2 rounded-full hover:bg-canvas-subtle text-on-surface-variant hover:text-on-surface transition-colors" onclick="closeDrawer()">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Síntesis de Estado -->
+<div class="bg-canvas-subtle/70 rounded-xl p-space-md space-y-space-sm">
+<div class="flex items-center justify-between font-label-md text-label-md">
+<span class="text-on-surface-variant">Módulo en curso</span>
+<span class="text-on-surface font-semibold" id="drawerModule">Módulo</span>
+</div>
+<div class="flex items-center justify-between font-label-md text-label-md">
+<span class="text-on-surface-variant">Estado actual</span>
+<span class="text-primary font-semibold" id="drawerStatus">Listo</span>
+</div>
+<div class="flex items-center justify-between font-label-md text-label-md">
+<span class="text-on-surface-variant">Fecha de registro</span>
+<span class="text-on-surface" id="drawerDate">Fecha</span>
+</div>
+</div>
+<!-- Resumen Ejecutivo -->
+<div class="space-y-2">
+<h4 class="font-title-md text-title-md text-on-surface">Notas y Progreso</h4>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed" id="drawerNotes">
+            Detalles descriptivos sobre el participante.
+          </p>
+</div>
+<!-- Registro de Hitos Clave -->
+<div class="space-y-3 pt-space-xs">
+<h4 class="font-title-md text-title-md text-on-surface">Etapas del Recorrido</h4>
+<div class="space-y-2 font-body-sm text-body-sm">
+<div class="flex items-center gap-3 p-2.5 rounded-lg bg-sage-soft/50 text-on-surface">
+<span class="material-symbols-outlined text-primary text-[18px]">check_circle</span>
+<span class="flex-1">Apertura y encuadre inicial</span>
+<span class="font-label-sm text-label-sm text-primary">Completado</span>
+</div>
+<div class="flex items-center gap-3 p-2.5 rounded-lg bg-sage-soft/50 text-on-surface">
+<span class="material-symbols-outlined text-primary text-[18px]">check_circle</span>
+<span class="flex-1">Evaluación de horizontes</span>
+<span class="font-label-sm text-label-sm text-primary">Completado</span>
+</div>
+<div class="flex items-center gap-3 p-2.5 rounded-lg bg-canvas-subtle text-on-surface-variant">
+<span class="material-symbols-outlined text-outline text-[18px]">radio_button_unchecked</span>
+<span class="flex-1">Emisión de Dossier ARQUITÉ</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Generado</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Acciones Inferiores -->
+<div class="pt-space-xl mt-space-lg flex flex-col gap-2">
+<button class="w-full py-3 px-4 rounded-xl bg-primary text-on-primary hover:bg-primary-container font-title-md text-title-md flex items-center justify-center gap-2 transition-colors shadow-sm" id="drawerDownloadBtn" onclick="triggerDownload(currentParticipant)">
+<span class="material-symbols-outlined text-[20px]">download</span>
+<span>Descargar Dossier Completo (.PDF)</span>
+</button>
+<button class="w-full py-2.5 px-4 rounded-xl bg-canvas-subtle hover:bg-canvas-subtle/80 text-on-surface font-body-sm text-body-sm transition-colors text-center" onclick="closeDrawer()">
+          Cerrar vista
+        </button>
+</div>
+</div>
+</div>
+<!-- Notificación Toast Simple al Descargar -->
+<div class="fixed bottom-6 right-6 bg-surface-white text-on-surface px-space-lg py-space-sm rounded-xl shadow-xl flex items-center gap-3 opacity-0 pointer-events-none transition-all duration-300 z-50" id="toastNotification">
+<span class="material-symbols-outlined text-primary text-[20px]">cloud_done</span>
+<span class="font-body-sm text-body-sm" id="toastMsg">Descarga iniciada con éxito.</span>
+</div>
+<!-- Script Liviano de Interacción -->
+<script>
+    let currentParticipant = '';
+
+    function openDrawer(name, role, module, step, date, status, notes) {
+      currentParticipant = name;
+      document.getElementById('drawerName').innerText = name;
+      document.getElementById('drawerRole').innerText = role;
+      document.getElementById('drawerModule').innerText = module;
+      document.getElementById('drawerDate').innerText = date;
+      document.getElementById('drawerStatus').innerText = status;
+      document.getElementById('drawerNotes').innerText = notes;
+      
+      const backdrop = document.getElementById('drawerBackdrop');
+      const panel = document.getElementById('drawerPanel');
+      backdrop.classList.remove('opacity-0', 'pointer-events-none');
+      panel.classList.remove('translate-x-full');
+    }
+
+    function closeDrawer() {
+      const backdrop = document.getElementById('drawerBackdrop');
+      const panel = document.getElementById('drawerPanel');
+      backdrop.classList.add('opacity-0', 'pointer-events-none');
+      panel.classList.add('translate-x-full');
+    }
+
+    function triggerDownload(name) {
+      const toast = document.getElementById('toastNotification');
+      const toastMsg = document.getElementById('toastMsg');
+      toastMsg.innerText = `Preparando informe de ${name}...`;
+      toast.classList.remove('opacity-0', 'pointer-events-none');
+      toast.classList.add('translate-y-0');
+
+      setTimeout(() => {
+        toastMsg.innerText = `Dossier de ${name} descargado.`;
+      }, 700);
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'pointer-events-none');
+      }, 2600);
+    }
+
+    // Filtro reactivo simple en cliente para mantener la pantalla ágil
+    const searchInput = document.getElementById('searchInput');
+    const tableBody = document.getElementById('tableBody');
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        const term = e.target.value.toLowerCase();
+        const rows = tableBody.querySelectorAll('tr');
+        rows.forEach(row => {
+          const text = row.innerText.toLowerCase();
+          row.style.display = text.includes(term) ? '' : 'none';
+        });
+      });
+    }
+  </script>
+</div></main><footer class="w-full bg-canvas-subtle mt-space-2xl"><div class="max-w-[1320px] mx-auto px-margin-mobile md:px-margin-tablet lg:px-margin py-space-2xl"><div class="flex flex-col md:flex-row items-baseline justify-between gap-space-lg pb-space-xl"><div class="space-y-space-xs max-w-md"><div class="font-headline-lg text-headline-lg text-on-surface">ARQUITÉ</div><p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">Estudio de dirección estratégica y cartografía creativa. Una mirada sobria, pausada y orientada al propósito.</p></div><div class="flex flex-wrap gap-x-space-xl gap-y-space-sm font-label-md text-label-md tracking-wider uppercase text-on-surface-variant"><a class="hover:text-on-surface transition-colors" data-path="panorama" href="#">Panorama</a><a class="hover:text-on-surface transition-colors" data-path="siete-umbrales" href="#">Siete Umbrales</a><a class="hover:text-on-surface transition-colors" data-path="informe-dossier" href="#">Informe Dossier</a><a class="hover:text-on-surface transition-colors" data-path="panel-administrador" href="#">Panel</a></div></div><div class="flex flex-col sm:flex-row items-center justify-between gap-space-md pt-space-lg text-on-surface-variant font-label-sm text-label-sm"><p>© ARQUITÉ. Dirección, perspectiva y sosiego.</p><p class="font-headline-sm italic text-body-sm text-outline">Cultivado para decisiones esenciales.</p></div></div></footer></body></html>
