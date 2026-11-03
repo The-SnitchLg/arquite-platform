@@ -2,6 +2,7 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "name": "arquite",
   "framework": "vite",
+  "installCommand": "pnpm install --dangerously-allow-all-builds",
   "buildCommand": "pnpm build",
   "outputDirectory": "dist",
   "cleanUrls": true,
