@@ -31,11 +31,11 @@ export const Modal: React.FC<ModalProps> = ({
   return (
     <DialogPrimitive.Root open={open} onOpenChange={onOpenChange}>
       <DialogPrimitive.Portal>
-        <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm transition-opacity animate-in fade-in" />
+        <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm transition-opacity animate-in fade-in no-print" />
         <DialogPrimitive.Content
-          className={`fixed left-[50%] top-[50%] z-50 w-[94vw] ${maxSizes[maxWidth]} translate-x-[-50%] translate-y-[-50%] rounded-2xl bg-surface-white p-6 shadow-modal border border-border-subtle focus:outline-none animate-in fade-in zoom-in-95`}
+          className={`modal-dialog-content fixed left-[50%] top-[50%] z-50 w-[94vw] ${maxSizes[maxWidth]} translate-x-[-50%] translate-y-[-50%] rounded-2xl bg-surface-white p-6 shadow-modal border border-border-subtle focus:outline-none animate-in fade-in zoom-in-95`}
         >
-          <div className="flex items-start justify-between pb-4 mb-4 border-b border-border-subtle">
+          <div className="modal-header-section flex items-start justify-between pb-4 mb-4 border-b border-border-subtle no-print">
             <div>
               <DialogPrimitive.Title className="font-editorial text-2xl text-ink font-normal">
                 {title}
@@ -52,7 +52,7 @@ export const Modal: React.FC<ModalProps> = ({
             </DialogPrimitive.Close>
           </div>
 
-          <div>{children}</div>
+          <div className="modal-body-content">{children}</div>
         </DialogPrimitive.Content>
       </DialogPrimitive.Portal>
     </DialogPrimitive.Root>

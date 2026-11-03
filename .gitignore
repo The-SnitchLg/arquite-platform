@@ -35,3 +35,7 @@ test-results/
 tmp/
 scratch/
 *.zip
+*.pdf
+*-preview.png
+diamond-report-*
+.vercel

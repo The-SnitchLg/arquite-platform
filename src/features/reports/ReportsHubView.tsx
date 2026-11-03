@@ -22,14 +22,17 @@ interface ReportsHubViewProps {
 
 export const ReportsHubView: React.FC<ReportsHubViewProps> = ({ user, journey }) => {
   const [previewModule, setPreviewModule] = useState<ModuleType | null>(null);
+  const [selectedDiamondSlot, setSelectedDiamondSlot] = useState<'A' | 'B'>('A');
 
   const thresholdsClosure = journey.closures.find(c => c.module === 'thresholds');
   const lettersClosure = journey.closures.find(c => c.module === 'letters');
 
-  // Closed version for diamond
-  const closedDiamondVersion = journey.diamondSlotA?.status === 'closed'
-    ? journey.diamondSlotA
-    : (journey.diamondSlotB?.status === 'closed' ? journey.diamondSlotB : null);
+  // Closed versions for diamond
+  const slotAVersion = journey.diamondSlotA?.status === 'closed' ? journey.diamondSlotA : null;
+  const slotBVersion = journey.diamondSlotB?.status === 'closed' ? journey.diamondSlotB : null;
+  const closedDiamondVersion = (selectedDiamondSlot === 'B' && slotBVersion) 
+    ? slotBVersion 
+    : (slotAVersion || slotBVersion);
 
   const handlePrint = () => {
     window.print();
@@ -73,18 +76,37 @@ export const ReportsHubView: React.FC<ReportsHubViewProps> = ({ user, journey })
           </div>
 
           <div className="pt-4 border-t border-border-subtle flex flex-col gap-2">
-            {closedDiamondVersion ? (
+            {slotAVersion && (
               <Button
-                variant="primary"
+                variant={selectedDiamondSlot === 'A' ? 'primary' : 'outline'}
                 fullWidth
                 size="md"
-                onClick={() => setPreviewModule('diamond')}
+                onClick={() => {
+                  setSelectedDiamondSlot('A');
+                  setPreviewModule('diamond');
+                }}
                 className="gap-2"
               >
                 <Eye className="w-4 h-4" />
-                <span>Ver y descargar informe (v{closedDiamondVersion.versionNumber})</span>
+                <span>Ver y descargar informe (v{slotAVersion.versionNumber})</span>
               </Button>
-            ) : (
+            )}
+            {slotBVersion && (
+              <Button
+                variant={selectedDiamondSlot === 'B' ? 'primary' : 'outline'}
+                fullWidth
+                size="md"
+                onClick={() => {
+                  setSelectedDiamondSlot('B');
+                  setPreviewModule('diamond');
+                }}
+                className="gap-2"
+              >
+                <Eye className="w-4 h-4" />
+                <span>Ver y descargar informe (v{slotBVersion.versionNumber})</span>
+              </Button>
+            )}
+            {!slotAVersion && !slotBVersion && (
               <div className="p-3 bg-canvas-subtle rounded-lg text-xs text-ink-muted flex items-center gap-2">
                 <Lock className="w-4 h-4 text-ink-muted flex-shrink-0" />
                 <span>Requiere completar 13/13 y confirmar el diamante.</span>
@@ -196,13 +218,36 @@ export const ReportsHubView: React.FC<ReportsHubViewProps> = ({ user, journey })
         description="Vista previa del documento oficial. Utiliza el botón de imprimir para guardarlo en PDF A4 de alta fidelidad."
         maxWidth="4xl"
       >
-        <div className="space-y-6 max-h-[75vh] overflow-y-auto p-4 sm:p-6 bg-white rounded-xl border border-border-subtle font-sans">
+        <div className="printable-scroll-container space-y-6 max-h-[75vh] overflow-y-auto p-4 sm:p-6 bg-white rounded-xl border border-border-subtle font-sans">
           {/* Top Printable Actions Toolbar */}
-          <div className="flex justify-between items-center pb-4 border-b border-border-subtle no-print">
-            <span className="text-xs text-ink-muted">
-              Documento verificado y generado desde snapshot inmutable
-            </span>
-            <Button variant="primary" size="sm" onClick={handlePrint} className="gap-2">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-4 border-b border-border-subtle no-print">
+            <div className="flex items-center gap-3">
+              <span className="text-xs text-ink-muted">
+                Documento verificado generado desde snapshot inmutable
+              </span>
+              {previewModule === 'diamond' && slotAVersion && slotBVersion && (
+                <div className="flex items-center gap-1 bg-canvas-subtle p-1 rounded-lg border border-border-subtle text-xs">
+                  <button
+                    onClick={() => setSelectedDiamondSlot('A')}
+                    className={`px-2.5 py-1 rounded text-xs font-semibold cursor-pointer ${
+                      selectedDiamondSlot === 'A' ? 'bg-primary text-white' : 'text-ink-muted hover:text-ink'
+                    }`}
+                  >
+                    Versión 1
+                  </button>
+                  <button
+                    onClick={() => setSelectedDiamondSlot('B')}
+                    className={`px-2.5 py-1 rounded text-xs font-semibold cursor-pointer ${
+                      selectedDiamondSlot === 'B' ? 'bg-primary text-white' : 'text-ink-muted hover:text-ink'
+                    }`}
+                  >
+                    Versión 2
+                  </button>
+                </div>
+              )}
+            </div>
+
+            <Button variant="primary" size="sm" onClick={handlePrint} className="gap-2 shrink-0">
               <Printer className="w-4 h-4" />
               <span>Imprimir / Guardar en PDF</span>
             </Button>
@@ -210,9 +255,9 @@ export const ReportsHubView: React.FC<ReportsHubViewProps> = ({ user, journey })
 
           {/* Printable Document Body: Diamond */}
           {previewModule === 'diamond' && closedDiamondVersion && (
-            <div className="space-y-8 py-4">
+            <div className="printable-report-wrapper space-y-8 py-4">
               {/* Cover / Header */}
-              <div className="border-b-2 border-primary pb-6">
+              <div className="border-b-2 border-primary pb-6 print-avoid-break">
                 <span className="text-xs font-semibold uppercase tracking-widest text-primary">
                   ARQUITÉ · ESTUDIO DE DIRECCIÓN ESTRATÉGICA
                 </span>
@@ -230,18 +275,18 @@ export const ReportsHubView: React.FC<ReportsHubViewProps> = ({ user, journey })
               </div>
 
               {/* Diamond Vector SVG */}
-              <div className="py-4 flex flex-col items-center justify-center bg-canvas-cream/50 rounded-2xl p-6 border border-border-subtle">
-                <DiamondSvg10 version={closedDiamondVersion} readOnly className="max-w-[480px]" />
+              <div className="py-4 flex flex-col items-center justify-center bg-canvas-cream/50 rounded-2xl p-6 border border-border-subtle print-avoid-break">
+                <DiamondSvg10 version={closedDiamondVersion} readOnly className="w-full max-w-[460px]" />
               </div>
 
               {/* Three Explorations */}
-              <div className="space-y-4">
+              <div className="space-y-4 print-avoid-break">
                 <h2 className="font-editorial text-2xl text-ink border-b border-border-subtle pb-1">
                   I. Las Tres Exploraciones del Contexto
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   {CANONICAL_EXPLORATIONS.map(exp => (
-                    <div key={exp.key} className="p-4 bg-canvas-subtle rounded-xl border border-border-subtle space-y-1.5">
+                    <div key={exp.key} className="p-4 bg-canvas-subtle rounded-xl border border-border-subtle space-y-1.5 report-card print-avoid-break">
                       <span className="text-xs font-semibold uppercase tracking-wider text-primary">
                         {exp.title}
                       </span>
@@ -254,11 +299,19 @@ export const ReportsHubView: React.FC<ReportsHubViewProps> = ({ user, journey })
                 </div>
               </div>
 
+              {/* Page Break for Page 2 */}
+              <div className="print-page-break" />
+
               {/* Ten Choices (Personal & Professional) */}
-              <div className="space-y-6">
-                <h2 className="font-editorial text-2xl text-ink border-b border-border-subtle pb-1">
-                  II. Las Diez Decisiones Estratégicas
-                </h2>
+              <div className="space-y-6 pt-2">
+                <div className="border-b border-border-subtle pb-2">
+                  <span className="text-xs font-semibold uppercase tracking-widest text-primary block">
+                    ARQUITÉ · MI ARQUITECTURA ESTRATÉGICA — VERSIÓN V{closedDiamondVersion.versionNumber}
+                  </span>
+                  <h2 className="font-editorial text-2xl text-ink mt-1">
+                    II. Las Diez Decisiones Estratégicas
+                  </h2>
+                </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Personal */}
@@ -267,7 +320,7 @@ export const ReportsHubView: React.FC<ReportsHubViewProps> = ({ user, journey })
                       Dimensión Personal
                     </span>
                     {CANONICAL_STAGES.map(stage => (
-                      <div key={`doc-pers-${stage.index}`} className="p-4 bg-white rounded-xl border border-border-subtle space-y-1">
+                      <div key={`doc-pers-${stage.index}`} className="p-4 bg-white rounded-xl border border-border-subtle space-y-1 report-card print-avoid-break">
                         <span className="text-xs font-bold text-ink-muted">
                           {stage.index + 1}. {stage.title}
                         </span>
@@ -285,7 +338,7 @@ export const ReportsHubView: React.FC<ReportsHubViewProps> = ({ user, journey })
                       Dimensión Profesional
                     </span>
                     {CANONICAL_STAGES.map(stage => (
-                      <div key={`doc-prof-${stage.index}`} className="p-4 bg-white rounded-xl border border-border-subtle space-y-1">
+                      <div key={`doc-prof-${stage.index}`} className="p-4 bg-white rounded-xl border border-border-subtle space-y-1 report-card print-avoid-break">
                         <span className="text-xs font-bold text-ink-muted">
                           {stage.index + 1}. {stage.title}
                         </span>
@@ -297,14 +350,26 @@ export const ReportsHubView: React.FC<ReportsHubViewProps> = ({ user, journey })
                     ))}
                   </div>
                 </div>
+
+                {/* Audit & Authenticity Stamp */}
+                <div className="mt-8 pt-4 border-t-2 border-border-subtle flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 text-xs text-ink-muted print-avoid-break">
+                  <div>
+                    <p className="font-semibold text-ink">ARQUITÉ · Documento Oficial Emitido</p>
+                    <p>Snapshot inmutable confirmado por el titular · Integridad verificada</p>
+                  </div>
+                  <div className="text-right">
+                    <p>Identificador: <code className="font-mono text-[11px]">{closedDiamondVersion.id}</code></p>
+                    <p>Fecha oficial de cierre: {closedDiamondVersion.closedAt ? new Date(closedDiamondVersion.closedAt).toLocaleDateString() : 'Confirmado'}</p>
+                  </div>
+                </div>
               </div>
             </div>
           )}
 
           {/* Printable Document Body: Thresholds */}
           {previewModule === 'thresholds' && (
-            <div className="space-y-8 py-4">
-              <div className="border-b-2 border-primary pb-6">
+            <div className="printable-report-wrapper space-y-8 py-4">
+              <div className="border-b-2 border-primary pb-6 print-avoid-break">
                 <span className="text-xs font-semibold uppercase tracking-widest text-primary">
                   ARQUITÉ · ESTUDIO DE DIRECCIÓN ESTRATÉGICA
                 </span>
@@ -325,7 +390,7 @@ export const ReportsHubView: React.FC<ReportsHubViewProps> = ({ user, journey })
                   const rec = journey.thresholds.find(t => t.key === tMeta.key);
 
                   return (
-                    <div key={tMeta.key} className="p-5 bg-white rounded-xl border border-border-subtle space-y-2">
+                    <div key={tMeta.key} className="p-5 bg-white rounded-xl border border-border-subtle space-y-2 report-card print-avoid-break">
                       <div className="flex items-center justify-between pb-2 border-b border-border-subtle">
                         <div className="flex items-center gap-2">
                           <span className="font-editorial text-lg text-primary">{tMeta.romanNumeral}.</span>
@@ -357,8 +422,8 @@ export const ReportsHubView: React.FC<ReportsHubViewProps> = ({ user, journey })
 
           {/* Printable Document Body: Letters */}
           {previewModule === 'letters' && (
-            <div className="space-y-8 py-4">
-              <div className="border-b-2 border-primary pb-6">
+            <div className="printable-report-wrapper space-y-8 py-4">
+              <div className="border-b-2 border-primary pb-6 print-avoid-break">
                 <span className="text-xs font-semibold uppercase tracking-widest text-primary">
                   ARQUITÉ · ESTUDIO DE DIRECCIÓN ESTRATÉGICA
                 </span>
@@ -375,7 +440,7 @@ export const ReportsHubView: React.FC<ReportsHubViewProps> = ({ user, journey })
               </div>
 
               {/* Letter 1: Personal */}
-              <div className="p-8 bg-canvas-subtle rounded-2xl border border-border-subtle space-y-4">
+              <div className="p-8 bg-canvas-subtle rounded-2xl border border-border-subtle space-y-4 report-card print-avoid-break">
                 <span className="text-xs font-semibold uppercase tracking-widest text-primary block pb-2 border-b border-border-subtle">
                   I. Carta a mi Ser Personal
                 </span>
@@ -384,8 +449,10 @@ export const ReportsHubView: React.FC<ReportsHubViewProps> = ({ user, journey })
                 </div>
               </div>
 
+              <div className="print-page-break" />
+
               {/* Letter 2: Professional */}
-              <div className="p-8 bg-canvas-subtle rounded-2xl border border-border-subtle space-y-4">
+              <div className="p-8 bg-canvas-subtle rounded-2xl border border-border-subtle space-y-4 report-card print-avoid-break">
                 <span className="text-xs font-semibold uppercase tracking-widest text-primary block pb-2 border-b border-border-subtle">
                   II. Carta a mi Líder Profesional
                 </span>

@@ -60,22 +60,100 @@ body {
 
 /* Print Styles for autonomous editorial reports */
 @media print {
-  body {
-    background: #ffffff !important;
-    color: #111111 !important;
-  }
-  .no-print {
-    display: none !important;
-  }
-  .print-only {
-    display: block !important;
-  }
   @page {
     size: A4 portrait;
-    margin: 1.5cm;
+    margin: 12mm 15mm 15mm 15mm;
   }
-  .page-break {
-    page-break-after: always;
+
+  html, body {
+    background: #ffffff !important;
+    color: #1E293B !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* 1. Hide the entire application background when printing report */
+  #root,
+  header,
+  footer,
+  nav,
+  .no-print,
+  [data-radix-dialog-overlay] {
+    display: none !important;
+  }
+
+  /* 2. Un-fix the Radix Portal and Content for continuous A4 paged layout */
+  [data-radix-portal] {
+    position: static !important;
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+
+  .modal-dialog-content {
+    position: static !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 0 !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+    overflow: visible !important;
+  }
+
+  /* Hide modal dialog chrome (header title, description, close icon) */
+  .modal-header-section {
+    display: none !important;
+  }
+
+  /* Unconstrain scroll container */
+  .printable-scroll-container {
+    max-height: none !important;
+    height: auto !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+  }
+
+  /* Page break utilities */
+  .print-page-break {
+    page-break-after: always !important;
+    break-after: page !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+  }
+
+  .print-avoid-break {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .report-card {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    box-shadow: none !important;
+    border: 1px solid #CBD5E1 !important;
+  }
+
+  /* Preserve all colors, SVG fills, and gradients */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 }
 

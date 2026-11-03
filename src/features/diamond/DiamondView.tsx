@@ -32,8 +32,11 @@ export const DiamondView: React.FC<DiamondViewProps> = ({ journey, onNavigateToR
   const slotA = journey.diamondSlotA;
   const slotB = journey.diamondSlotB;
 
-  // Active view slot: defaults to B if exists and editable, otherwise A
-  const [activeSlot, setActiveSlot] = useState<'A' | 'B'>(slotB ? 'B' : 'A');
+  // Active view slot: defaults to B if exists, otherwise A
+  const [activeSlot, setActiveSlot] = useState<'A' | 'B'>(() => {
+    if (slotB && slotB.status === 'draft') return 'B';
+    return slotB ? 'B' : 'A';
+  });
   const [selectedDimension, setSelectedDimension] = useState<Dimension>('personal');
   const [selectedStageIndex, setSelectedStageIndex] = useState<number>(0);
   const [showComparison, setShowComparison] = useState(false);
@@ -42,7 +45,7 @@ export const DiamondView: React.FC<DiamondViewProps> = ({ journey, onNavigateToR
   const [renewalConsentChecked, setRenewalConsentChecked] = useState(false);
   const [saveStatus, setSaveStatus] = useState<string>('Guardado');
 
-  const currentVersion = activeSlot === 'A' ? slotA : slotB;
+  const currentVersion = activeSlot === 'B' ? (slotB || slotA) : slotA;
   const isReadOnly = currentVersion?.status === 'closed';
   const progress = calculateDiamondProgress(currentVersion);
 

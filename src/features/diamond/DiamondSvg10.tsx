@@ -30,12 +30,9 @@ export const DiamondSvg10: React.FC<DiamondSvg10Props> = ({
   readOnly = false,
   className = ''
 }) => {
-  const activeCount = React.useMemo(() => {
-    if (!version) return 0;
-    const p = (version.personalAnswers || []).filter(isValidNarrative).length;
-    const pr = (version.professionalAnswers || []).filter(isValidNarrative).length;
-    return p + pr;
-  }, [version]);
+  const pCount = (version?.personalAnswers || []).filter(isValidNarrative).length;
+  const prCount = (version?.professionalAnswers || []).filter(isValidNarrative).length;
+  const activeCount = pCount + prCount;
 
   const prefix = React.useId();
 

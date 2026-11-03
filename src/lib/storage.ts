@@ -242,41 +242,72 @@ class DataRepository {
 
   public saveDiamondContext(slot: 'A' | 'B', key: ContextKey, value: string): boolean {
     if (!this.currentUser) return false;
-    const journey = this.getJourney();
+    const journey = this.journeys.get(this.currentUser.id);
     if (!journey) return false;
 
-    const version = slot === 'A' ? journey.diamondSlotA : journey.diamondSlotB;
-    if (!version || version.status === 'closed') return false; // Invariant: closed is read-only
+    const targetVersion = slot === 'A' ? journey.diamondSlotA : journey.diamondSlotB;
+    if (!targetVersion || targetVersion.status === 'closed') return false; // Invariant: closed is read-only
 
-    version.contexts[key] = value;
-    version.revision++;
-    journey.updatedAt = new Date().toISOString();
+    const updatedVersion: DiamondVersion = {
+      ...targetVersion,
+      contexts: {
+        ...targetVersion.contexts,
+        [key]: value
+      },
+      revision: targetVersion.revision + 1
+    };
+
+    const updatedJourney: JourneyData = {
+      ...journey,
+      diamondSlotA: slot === 'A' ? updatedVersion : journey.diamondSlotA,
+      diamondSlotB: slot === 'B' ? updatedVersion : journey.diamondSlotB,
+      updatedAt: new Date().toISOString()
+    };
+
+    this.journeys.set(journey.ownerId, updatedJourney);
     this.persistJourneys();
     return true;
   }
 
   public saveDiamondChoice(slot: 'A' | 'B', dimension: Dimension, index: number, value: string): boolean {
     if (!this.currentUser) return false;
-    const journey = this.getJourney();
+    const journey = this.journeys.get(this.currentUser.id);
     if (!journey) return false;
 
-    const version = slot === 'A' ? journey.diamondSlotA : journey.diamondSlotB;
-    if (!version || version.status === 'closed') return false;
+    const targetVersion = slot === 'A' ? journey.diamondSlotA : journey.diamondSlotB;
+    if (!targetVersion || targetVersion.status === 'closed') return false;
+
+    const newPersonal = [...targetVersion.personalAnswers];
+    const newProfessional = [...targetVersion.professionalAnswers];
 
     if (dimension === 'personal') {
-      version.personalAnswers[index] = value;
+      newPersonal[index] = value;
     } else {
-      version.professionalAnswers[index] = value;
+      newProfessional[index] = value;
     }
-    version.revision++;
-    journey.updatedAt = new Date().toISOString();
+
+    const updatedVersion: DiamondVersion = {
+      ...targetVersion,
+      personalAnswers: newPersonal,
+      professionalAnswers: newProfessional,
+      revision: targetVersion.revision + 1
+    };
+
+    const updatedJourney: JourneyData = {
+      ...journey,
+      diamondSlotA: slot === 'A' ? updatedVersion : journey.diamondSlotA,
+      diamondSlotB: slot === 'B' ? updatedVersion : journey.diamondSlotB,
+      updatedAt: new Date().toISOString()
+    };
+
+    this.journeys.set(journey.ownerId, updatedJourney);
     this.persistJourneys();
     return true;
   }
 
   public closeDiamond(slot: 'A' | 'B'): { success: boolean; error?: string } {
     if (!this.currentUser) return { success: false, error: 'No autenticado.' };
-    const journey = this.getJourney();
+    const journey = this.journeys.get(this.currentUser.id);
     if (!journey) return { success: false, error: 'Recorrido no encontrado.' };
 
     const version = slot === 'A' ? journey.diamondSlotA : journey.diamondSlotB;
@@ -292,30 +323,41 @@ class DataRepository {
     }
 
     // Freeze snapshot
-    version.status = 'closed';
-    version.closedAt = new Date().toISOString();
-    version.confirmedBy = this.currentUser.id;
+    const closedVersion: DiamondVersion = {
+      ...version,
+      status: 'closed',
+      closedAt: new Date().toISOString(),
+      confirmedBy: this.currentUser.id
+    };
 
     const closure: ModuleClosure = {
       id: 'cls-dia-' + Date.now(),
       journeyId: journey.id,
       module: 'diamond',
-      editionNo: version.versionNumber,
-      diamondVersionId: version.id,
-      closedAt: version.closedAt,
-      confirmedBy: version.confirmedBy,
-      snapshot: JSON.parse(JSON.stringify(version)),
-      snapshotHash: 'hash-' + version.id + '-' + Date.now()
+      editionNo: closedVersion.versionNumber,
+      diamondVersionId: closedVersion.id,
+      closedAt: closedVersion.closedAt!,
+      confirmedBy: closedVersion.confirmedBy!,
+      snapshot: JSON.parse(JSON.stringify(closedVersion)),
+      snapshotHash: 'hash-' + closedVersion.id + '-' + Date.now()
     };
-    journey.closures.push(closure);
-    journey.updatedAt = new Date().toISOString();
+
+    const updatedJourney: JourneyData = {
+      ...journey,
+      diamondSlotA: slot === 'A' ? closedVersion : journey.diamondSlotA,
+      diamondSlotB: slot === 'B' ? closedVersion : journey.diamondSlotB,
+      closures: [...journey.closures, closure],
+      updatedAt: new Date().toISOString()
+    };
+
+    this.journeys.set(journey.ownerId, updatedJourney);
     this.persistJourneys();
 
     this.logAudit(
       'DIAMOND_CLOSED', 
       'diamond_version', 
-      version.id, 
-      `Confirmado y cerrado diamante versión ${version.versionNumber} (Slot ${slot})`,
+      closedVersion.id, 
+      `Confirmado y cerrado diamante versión ${closedVersion.versionNumber} (Slot ${slot})`,
       journey.id
     );
     return { success: true };
@@ -323,7 +365,7 @@ class DataRepository {
 
   public createSecondVersion(): { success: boolean; error?: string } {
     if (!this.currentUser) return { success: false, error: 'No autenticado.' };
-    const journey = this.getJourney();
+    const journey = this.journeys.get(this.currentUser.id);
     if (!journey) return { success: false, error: 'Recorrido no encontrado.' };
 
     if (!journey.diamondSlotA || journey.diamondSlotA.status !== 'closed') {
@@ -345,8 +387,14 @@ class DataRepository {
       professionalAnswers: ['', '', '', '', ''],
       revision: 1
     };
-    journey.diamondSlotB = v2;
-    journey.updatedAt = new Date().toISOString();
+
+    const updatedJourney: JourneyData = {
+      ...journey,
+      diamondSlotB: v2,
+      updatedAt: new Date().toISOString()
+    };
+
+    this.journeys.set(journey.ownerId, updatedJourney);
     this.persistJourneys();
 
     this.logAudit('DIAMOND_V2_CREATED', 'diamond_version', v2.id, 'Creación de segunda versión temporal (Slot B)', journey.id);
@@ -375,8 +423,10 @@ class DataRepository {
 
     // Atomic Swap
     // 1. Slot A is replaced by Recent B (moved to slot A)
-    recentB.slot = 'A';
-    journey.diamondSlotA = recentB;
+    const movedA: DiamondVersion = {
+      ...recentB,
+      slot: 'A'
+    };
 
     // 2. New Version vN is created empty in Slot B
     const newB: DiamondVersion = {
@@ -391,8 +441,14 @@ class DataRepository {
       professionalAnswers: ['', '', '', '', ''],
       revision: 1
     };
-    journey.diamondSlotB = newB;
-    journey.updatedAt = new Date().toISOString();
+
+    const updatedJourney: JourneyData = {
+      ...journey,
+      diamondSlotA: movedA,
+      diamondSlotB: newB,
+      updatedAt: new Date().toISOString()
+    };
+    this.journeys.set(journey.ownerId, updatedJourney);
 
     // 3. Register Consent & Audit
     const consent: ReplacementConsent = {
