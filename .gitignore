@@ -38,4 +38,6 @@ scratch/
 *.pdf
 *-preview.png
 diamond-report-*
+# Graphify cache
+graphify-out/cache/
 .vercel

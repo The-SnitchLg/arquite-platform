@@ -1,9 +1,9 @@
 {
   "package.json": {
-    "mtime": 1793721867.6215286,
-    "seen": 1793722847.7034166,
-    "ast_hash": "d80a74b7af44b4631fd17ea48a88d0fc",
-    "semantic_hash": "d80a74b7af44b4631fd17ea48a88d0fc"
+    "mtime": 1793733069.7256553,
+    "seen": 1793736456.9235487,
+    "ast_hash": "7806d91839388f7d270fd3714714f94e",
+    "semantic_hash": ""
   },
   "src/App.tsx": {
     "mtime": 1793722576.1913376,
@@ -36,10 +36,10 @@
     "semantic_hash": "743c1c46c9467057a05335a66272dc98"
   },
   "src/components/ui/Modal.tsx": {
-    "mtime": 1793722269.4568522,
-    "seen": 1793722847.7034166,
-    "ast_hash": "19acdefae94ad17244b9ce9b17f881a5",
-    "semantic_hash": "19acdefae94ad17244b9ce9b17f881a5"
+    "mtime": 1793730822.0189562,
+    "seen": 1793736456.9255428,
+    "ast_hash": "89696d883a354c5ca008cc67ce1443a9",
+    "semantic_hash": ""
   },
   "src/domain/comparison.ts": {
     "mtime": 1793722144.666703,
@@ -66,10 +66,10 @@
     "semantic_hash": "2a53f86b2edf782dc9bf5084fbd813db"
   },
   "src/features/auth/AuthView.tsx": {
-    "mtime": 1793722304.45948,
-    "seen": 1793722847.7034166,
-    "ast_hash": "f132a2194fc92d33823af56d0c38eac6",
-    "semantic_hash": "f132a2194fc92d33823af56d0c38eac6"
+    "mtime": 1793723773.7350507,
+    "seen": 1793736456.9259498,
+    "ast_hash": "695b3a757a8516fc32bb91d181cb8108",
+    "semantic_hash": ""
   },
   "src/features/diamond/DiamondComparisonView.tsx": {
     "mtime": 1793722407.2693596,
@@ -78,16 +78,16 @@
     "semantic_hash": "bf99a5919c377160ef66db721696648b"
   },
   "src/features/diamond/DiamondSvg10.tsx": {
-    "mtime": 1793722234.9062011,
-    "seen": 1793722847.7034166,
-    "ast_hash": "854ccbc239f6e3496b33fef339b215ef",
-    "semantic_hash": "854ccbc239f6e3496b33fef339b215ef"
+    "mtime": 1793730656.5102048,
+    "seen": 1793736456.9259498,
+    "ast_hash": "64b20079295d2c21cc3e252546a6ca12",
+    "semantic_hash": ""
   },
   "src/features/diamond/DiamondView.tsx": {
-    "mtime": 1793722378.102083,
-    "seen": 1793722847.7034166,
-    "ast_hash": "12b951ddcbccd68d90f44bff54ae3bc2",
-    "semantic_hash": "12b951ddcbccd68d90f44bff54ae3bc2"
+    "mtime": 1793730799.6961432,
+    "seen": 1793736456.9259498,
+    "ast_hash": "d1714cbacd2ed4974f4e84de5e96b31b",
+    "semantic_hash": ""
   },
   "src/features/interventions/InterventionsView.tsx": {
     "mtime": 1793722671.9250555,
@@ -108,10 +108,10 @@
     "semantic_hash": "e2da8b0b71973bcee1161f5fe709bb1e"
   },
   "src/features/reports/ReportsHubView.tsx": {
-    "mtime": 1793722727.2145035,
-    "seen": 1793722847.7034166,
-    "ast_hash": "55a06d0da5487ae6242a8024b1f49960",
-    "semantic_hash": "55a06d0da5487ae6242a8024b1f49960"
+    "mtime": 1793731097.1666882,
+    "seen": 1793736456.9272032,
+    "ast_hash": "6ad2279d07dba50a6b1d5084c33ff475",
+    "semantic_hash": ""
   },
   "src/features/thresholds/ThresholdsView.tsx": {
     "mtime": 1793722759.6884155,
@@ -126,10 +126,10 @@
     "semantic_hash": "0acc930a21869fde708e6193e8a6f258"
   },
   "src/lib/storage.ts": {
-    "mtime": 1793722209.9744523,
-    "seen": 1793722847.7034166,
-    "ast_hash": "63388fbf9c5bc9163093a884b8d9390b",
-    "semantic_hash": "63388fbf9c5bc9163093a884b8d9390b"
+    "mtime": 1793731164.5563197,
+    "seen": 1793736456.9272032,
+    "ast_hash": "07bd8b4f67683f6a8290471151e8f73b",
+    "semantic_hash": ""
   },
   "src/main.tsx": {
     "mtime": 1793722584.2275782,
@@ -150,9 +150,369 @@
     "semantic_hash": "a6a7b930fc98ec91f3808274692a169e"
   },
   "vite.config.ts": {
-    "mtime": 1793721873.554315,
-    "seen": 1793722847.7034166,
-    "ast_hash": "27b224da89e55b04a0eb87d03670b7f0",
-    "semantic_hash": "27b224da89e55b04a0eb87d03670b7f0"
+    "mtime": 1793723780.1836274,
+    "seen": 1793736456.928202,
+    "ast_hash": "7b73b17b208c1d28c1f7df25fced3584",
+    "semantic_hash": ""
+  },
+  "scripts/verify-fixes.mjs": {
+    "mtime": 1793732410.5248663,
+    "seen": 1793736456.9235487,
+    "ast_hash": "2952180cc128c17942854e8e42daf02f",
+    "semantic_hash": ""
+  },
+  "scripts/verify-live.mjs": {
+    "mtime": 1793733181.8313568,
+    "seen": 1793736456.9235487,
+    "ast_hash": "0e2f487aebb6f5f079272cba9beabbf6",
+    "semantic_hash": ""
+  },
+  "src/domain/diamond.test.ts": {
+    "mtime": 1793731134.8896182,
+    "seen": 1793736456.9259498,
+    "ast_hash": "cf50b4f5f06c12a32c4e7ad8b078f7b4",
+    "semantic_hash": ""
+  },
+  "vercel.json": {
+    "mtime": 1793735388.9751496,
+    "seen": 1793736456.928202,
+    "ast_hash": "07a99834b54d6e1f880d152785609c03",
+    "semantic_hash": ""
+  },
+  ".github/workflows/deploy.yml": {
+    "mtime": 1793723788.154788,
+    "seen": 1793736456.928202,
+    "ast_hash": "a09b566f60f97ed52fe3f9355ee49d87",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Dise\u00f1o/acceso_directivo_arquit/code.html": {
+    "mtime": 1793690291.2434597,
+    "seen": 1793736456.928202,
+    "ast_hash": "9f67e3d6ca87e9e02102495022d8534b",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Dise\u00f1o/acceso_directivo_simple_arquit/code.html": {
+    "mtime": 1793690291.2025113,
+    "seen": 1793736456.928202,
+    "ast_hash": "c6f929809a943c6814cc990feb222667",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Dise\u00f1o/cartas_al_futuro_arquit/code.html": {
+    "mtime": 1793690291.399898,
+    "seen": 1793736456.928202,
+    "ast_hash": "a8f4d5e97c91f9790ac5e3df07f67a39",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Dise\u00f1o/gu_a_de_desplegables_mi_diamante_siete_umbrales/code.html": {
+    "mtime": 1793690291.4758408,
+    "seen": 1793736456.928202,
+    "ast_hash": "4e64d17736a3f4dc83c131deb2f63685",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Dise\u00f1o/informe_dossier_arquit/code.html": {
+    "mtime": 1793690291.4215147,
+    "seen": 1793736456.928202,
+    "ast_hash": "afda4030e576b83ad278be00d3f09a23",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Dise\u00f1o/mi_diamante_arquit/code.html": {
+    "mtime": 1793690291.3355935,
+    "seen": 1793736456.928202,
+    "ast_hash": "3720501cfc7cf52ee68d2d38c4d6ea2c",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Dise\u00f1o/panel_administrador_arquit/code.html": {
+    "mtime": 1793690291.450166,
+    "seen": 1793736456.928202,
+    "ast_hash": "81b8f5c7066debec15c33dbc7f1ca15f",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Dise\u00f1o/panorama_arquit/code.html": {
+    "mtime": 1793690291.306491,
+    "seen": 1793736456.928202,
+    "ast_hash": "c685a6e2f535f8b107cfaaff679ebb24",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Dise\u00f1o/registro_simple_arquit/code.html": {
+    "mtime": 1793690291.2781909,
+    "seen": 1793736456.928202,
+    "ast_hash": "550187324c0b454f31aaf56acd64d9bc",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Dise\u00f1o/siete_umbrales_arquit/code.html": {
+    "mtime": 1793690291.3716283,
+    "seen": 1793736456.928202,
+    "ast_hash": "89d2b36a637353a8983948b40761418b",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Dise\u00f1o/warm_editorial_roadmap/DESIGN.md": {
+    "mtime": 1793690291.5054853,
+    "seen": 1793736456.928202,
+    "ast_hash": "4185272f5547ee64c6a0052159f588f5",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Estructura/01_PRD_ARQUITE.md": {
+    "mtime": 1793717127.237375,
+    "seen": 1793736456.928202,
+    "ast_hash": "3d7d6df8c271fb9f892da6112765b17a",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Estructura/02_TRD_Arquitectura_ARQUITE.md": {
+    "mtime": 1793717127.252197,
+    "seen": 1793736456.928202,
+    "ast_hash": "866af6a66f5be7d7ea94abbdd28fa044",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Estructura/03_Flujos_UX_User_Journey_ARQUITE.md": {
+    "mtime": 1793717127.261086,
+    "seen": 1793736456.928202,
+    "ast_hash": "13ae7902efc4f935a00320b38cbca905",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Estructura/04_Design_Brief_UI_Tokens_ARQUITE.md": {
+    "mtime": 1793717127.261086,
+    "seen": 1793736456.928202,
+    "ast_hash": "3c749a0279dad34f82ef7a5c405fcc44",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Estructura/05_Backend_Data_Schema_Supabase_ARQUITE.md": {
+    "mtime": 1793717127.2724695,
+    "seen": 1793736456.928202,
+    "ast_hash": "a2de83bd912a94f9610ad1bfbc92794f",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Estructura/06_Plan_Implementacion_Antigravity_ARQUITE.md": {
+    "mtime": 1793717127.2882123,
+    "seen": 1793736456.928202,
+    "ast_hash": "8d6a397fc2383f7d2758a06add1c5e93",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Estructura/README.md": {
+    "mtime": 1793717127.292365,
+    "seen": 1793736456.928202,
+    "ast_hash": "f959c8117ee3732f727ed21ff05d0049",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Estructura/fuentes/ARQUITE_Especificacion_Funcional_y_Backlog_Actualizada_v5.md": {
+    "mtime": 1793717127.3081338,
+    "seen": 1793736456.928202,
+    "ast_hash": "f22f8524c3cd2f5b94d4445a5496e7a4",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Estructura/referencias_stitch/acceso_directivo_arquit/code.html": {
+    "mtime": 1793717127.356486,
+    "seen": 1793736456.928202,
+    "ast_hash": "9f67e3d6ca87e9e02102495022d8534b",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Estructura/referencias_stitch/acceso_directivo_simple_arquit/code.html": {
+    "mtime": 1793717127.381934,
+    "seen": 1793736456.928202,
+    "ast_hash": "c6f929809a943c6814cc990feb222667",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Estructura/referencias_stitch/cartas_al_futuro_arquit/code.html": {
+    "mtime": 1793717127.4076428,
+    "seen": 1793736456.928202,
+    "ast_hash": "a8f4d5e97c91f9790ac5e3df07f67a39",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Estructura/referencias_stitch/gu_a_de_desplegables_mi_diamante_siete_umbrales/code.html": {
+    "mtime": 1793717127.432503,
+    "seen": 1793736456.928202,
+    "ast_hash": "4e64d17736a3f4dc83c131deb2f63685",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Estructura/referencias_stitch/informe_dossier_arquit/code.html": {
+    "mtime": 1793717127.4569354,
+    "seen": 1793736456.928202,
+    "ast_hash": "afda4030e576b83ad278be00d3f09a23",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Estructura/referencias_stitch/mi_diamante_arquit/code.html": {
+    "mtime": 1793717127.4805734,
+    "seen": 1793736456.928202,
+    "ast_hash": "3720501cfc7cf52ee68d2d38c4d6ea2c",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Estructura/referencias_stitch/panel_administrador_arquit/code.html": {
+    "mtime": 1793717127.5102434,
+    "seen": 1793736456.928202,
+    "ast_hash": "81b8f5c7066debec15c33dbc7f1ca15f",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Estructura/referencias_stitch/panorama_arquit/code.html": {
+    "mtime": 1793717127.530318,
+    "seen": 1793736456.928202,
+    "ast_hash": "c685a6e2f535f8b107cfaaff679ebb24",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Estructura/referencias_stitch/registro_simple_arquit/code.html": {
+    "mtime": 1793717127.5566142,
+    "seen": 1793736456.928202,
+    "ast_hash": "550187324c0b454f31aaf56acd64d9bc",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Estructura/referencias_stitch/siete_umbrales_arquit/code.html": {
+    "mtime": 1793717127.5782185,
+    "seen": 1793736456.928202,
+    "ast_hash": "89d2b36a637353a8983948b40761418b",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Estructura/referencias_stitch/warm_editorial_roadmap/DESIGN.md": {
+    "mtime": 1793717127.6013541,
+    "seen": 1793736456.928202,
+    "ast_hash": "4185272f5547ee64c6a0052159f588f5",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1793723752.5964265,
+    "seen": 1793736456.928202,
+    "ast_hash": "1acf7fd4ea79aaf69965060a221944d3",
+    "semantic_hash": ""
+  },
+  "docs/adr/ADR-001-Visual-Architecture-And-Data-Isolation.md": {
+    "mtime": 1793724928.021946,
+    "seen": 1793736456.928202,
+    "ast_hash": "c383226c43cdedc3a894fa3054489e49",
+    "semantic_hash": ""
+  },
+  "index.html": {
+    "mtime": 1793721940.4252927,
+    "seen": 1793736456.928202,
+    "ast_hash": "3230cd7e76df568b1acd118acee81129",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Dise\u00f1o/acceso_directivo_arquit/screen.png": {
+    "mtime": 1793690291.2650676,
+    "seen": 1793736456.928202,
+    "ast_hash": "e2a1b2e9db9a9b9a69a722228b27acb4",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Dise\u00f1o/acceso_directivo_simple_arquit/screen.png": {
+    "mtime": 1793690291.2274108,
+    "seen": 1793736456.928202,
+    "ast_hash": "cf04bb4afa90bdd7c572d2fa5d28eccb",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Dise\u00f1o/cartas_al_futuro_arquit/screen.png": {
+    "mtime": 1793690291.4063125,
+    "seen": 1793736456.928202,
+    "ast_hash": "f7b5481021ebd5320f53252ceaeb3389",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Dise\u00f1o/gu_a_de_desplegables_mi_diamante_siete_umbrales/screen.png": {
+    "mtime": 1793690291.490996,
+    "seen": 1793736456.928202,
+    "ast_hash": "072ae378cfc735bc3e2adabf02b20765",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Dise\u00f1o/informe_dossier_arquit/screen.png": {
+    "mtime": 1793690291.4366663,
+    "seen": 1793736456.928202,
+    "ast_hash": "20aa1bc4658d85c01bf7805619899bf0",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Dise\u00f1o/mi_diamante_arquit/screen.png": {
+    "mtime": 1793690291.3540494,
+    "seen": 1793736456.928202,
+    "ast_hash": "b89eff9899fcfc398fa4f054dea0db2a",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Dise\u00f1o/panel_administrador_arquit/screen.png": {
+    "mtime": 1793690291.465522,
+    "seen": 1793736456.928202,
+    "ast_hash": "699b006b4cb646ac4864b9987933dad2",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Dise\u00f1o/panorama_arquit/screen.png": {
+    "mtime": 1793690291.3198338,
+    "seen": 1793736456.928202,
+    "ast_hash": "b68ed381596b20d35f4c57a0882020f3",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Dise\u00f1o/registro_simple_arquit/screen.png": {
+    "mtime": 1793690291.2914908,
+    "seen": 1793736456.928202,
+    "ast_hash": "26aa121c6013461a32891fb7ad389316",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Dise\u00f1o/siete_umbrales_arquit/screen.png": {
+    "mtime": 1793690291.382031,
+    "seen": 1793736456.928202,
+    "ast_hash": "b5ff7a738e00456f2593ac389e18c5d5",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Estructura/recursos-visuales/ARQUITE_Componentes_Clave_Stitch.png": {
+    "mtime": 1793717127.3261325,
+    "seen": 1793736456.928202,
+    "ast_hash": "2494ef5edf4387e9fa18074690c671b6",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Estructura/recursos-visuales/ARQUITE_Vistas_Clave_Stitch.png": {
+    "mtime": 1793717127.339086,
+    "seen": 1793736456.928202,
+    "ast_hash": "a5d23637c3861c152e76e143b101e5ef",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Estructura/referencias_stitch/acceso_directivo_arquit/screen.png": {
+    "mtime": 1793717127.3681643,
+    "seen": 1793736456.928202,
+    "ast_hash": "e2a1b2e9db9a9b9a69a722228b27acb4",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Estructura/referencias_stitch/acceso_directivo_simple_arquit/screen.png": {
+    "mtime": 1793717127.3916168,
+    "seen": 1793736456.928202,
+    "ast_hash": "cf04bb4afa90bdd7c572d2fa5d28eccb",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Estructura/referencias_stitch/cartas_al_futuro_arquit/screen.png": {
+    "mtime": 1793717127.4194305,
+    "seen": 1793736456.928202,
+    "ast_hash": "f7b5481021ebd5320f53252ceaeb3389",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Estructura/referencias_stitch/gu_a_de_desplegables_mi_diamante_siete_umbrales/screen.png": {
+    "mtime": 1793717127.4435275,
+    "seen": 1793736456.928202,
+    "ast_hash": "072ae378cfc735bc3e2adabf02b20765",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Estructura/referencias_stitch/informe_dossier_arquit/screen.png": {
+    "mtime": 1793717127.465886,
+    "seen": 1793736456.928202,
+    "ast_hash": "20aa1bc4658d85c01bf7805619899bf0",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Estructura/referencias_stitch/mi_diamante_arquit/screen.png": {
+    "mtime": 1793717127.4969964,
+    "seen": 1793736456.928202,
+    "ast_hash": "b89eff9899fcfc398fa4f054dea0db2a",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Estructura/referencias_stitch/panel_administrador_arquit/screen.png": {
+    "mtime": 1793717127.5202801,
+    "seen": 1793736456.928202,
+    "ast_hash": "699b006b4cb646ac4864b9987933dad2",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Estructura/referencias_stitch/panorama_arquit/screen.png": {
+    "mtime": 1793717127.542017,
+    "seen": 1793736456.928202,
+    "ast_hash": "b68ed381596b20d35f4c57a0882020f3",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Estructura/referencias_stitch/registro_simple_arquit/screen.png": {
+    "mtime": 1793717127.5651255,
+    "seen": 1793736456.928202,
+    "ast_hash": "26aa121c6013461a32891fb7ad389316",
+    "semantic_hash": ""
+  },
+  "Demo/Reglas_Estructura/referencias_stitch/siete_umbrales_arquit/screen.png": {
+    "mtime": 1793717127.587497,
+    "seen": 1793736456.928202,
+    "ast_hash": "b5ff7a738e00456f2593ac389e18c5d5",
+    "semantic_hash": ""
   }
 }
