@@ -17,7 +17,7 @@ ARQUITÉ es una plataforma premium de arquitectura estratégica de liderazgo bas
 5. **Ciberseguridad & Aislamiento:**
    - Autenticación mediante Supabase Auth.
    - Tablas bajo el prefijo `arq_` con Row Level Security (RLS) mandatorio en cada entidad.
-   - Rol de administrador protegido a nivel de servidor (`larrygomezg@gmail.com`).
+   - Rol de administrador protegido a nivel de servidor y base de datos con políticas RLS de acceso restringido.
    - Pista de auditoría obligatoria para consultas administrativas y eventos de sustitución.
 6. **Filosofía Ponytail (Reducción de consumo):**
    - Máxima reutilización de APIs nativas de plataforma.
