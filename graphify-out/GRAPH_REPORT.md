@@ -1,17 +1,17 @@
 # Graph Report - Arquite  (2026-11-03)
 
 ## Corpus Check
-- 43 files · ~365,306 words
+- 43 files · ~365,310 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 3 file(s) not represented in the graph (top: (none) 1, .css 1, .tsbuildinfo 1)
 
 ## Summary
-- 440 nodes · 807 edges · 32 communities (30 shown, 2 thin omitted)
+- 441 nodes · 808 edges · 32 communities (30 shown, 2 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 11 edges (avg confidence: 0.94)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `99ca02be`
+- Built from commit: `022c3259`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -79,8 +79,8 @@
 ## Communities (32 total, 2 thin omitted)
 
 ### Community 0 - "DiamondView.tsx"
-Cohesion: 0.16
-Nodes (38): 5. Catálogo de componentes a desarrollar, lucide-react, react, App(), AppHeader(), AppHeaderProps, NavTab, Badge() (+30 more)
+Cohesion: 0.18
+Nodes (33): 5. Catálogo de componentes a desarrollar, lucide-react, react, App(), AppHeader(), AppHeaderProps, NavTab, Badge() (+25 more)
 
 ### Community 1 - "domain.ts"
 Cohesion: 0.08
@@ -91,8 +91,8 @@ Cohesion: 0.10
 Nodes (19): name, packageManager, private, type, version, clsx, motion, @radix-ui/react-accordion (+11 more)
 
 ### Community 3 - "DataRepository"
-Cohesion: 0.18
-Nodes (5): 7. Máquina del doble diamante y operaciones críticas, 8. Módulos independientes y ediciones, DataRepository, AuditEvent, Dimension
+Cohesion: 0.14
+Nodes (10): 7. Máquina del doble diamante y operaciones críticas, 8. Módulos independientes y ediciones, DiamondViewProps, InterventionsViewProps, LettersViewProps, ThresholdsViewProps, DataRepository, AuditEvent (+2 more)
 
 ### Community 4 - "compilerOptions"
 Cohesion: 0.10
@@ -159,8 +159,8 @@ Cohesion: 0.25
 Nodes (7): ARQUITÉ · Paquete de especificaciones integrales v6.1, Decisión tecnológica recomendada [PROPUESTA], Diferencias por resolver en preflight, Empezar por aquí, Fuentes y recursos incluidos, No confundir especificación con implementación, Reglas que no pueden perderse
 
 ### Community 20 - "vercel.json"
-Cohesion: 0.25
-Nodes (7): buildCommand, cleanUrls, framework, name, outputDirectory, rewrites, $schema
+Cohesion: 0.22
+Nodes (8): buildCommand, cleanUrls, framework, installCommand, name, outputDirectory, rewrites, $schema
 
 ### Community 21 - "ARQUITÉ — Estudio de Dirección Estratégica & Liderazgo"
 Cohesion: 0.29
@@ -200,7 +200,7 @@ Nodes (3): 8.1 Pseudocódigo seguro de renovación, 8.2 Migración desde el demo
 
 ## Knowledge Gaps
 - **13 isolated node(s):** `@radix-ui/react-accordion`, `@radix-ui/react-tabs`, `@radix-ui/react-tooltip`, `@supabase/supabase-js`, `clsx` (+8 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 273 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 274 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **2 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
@@ -218,5 +218,5 @@ _Questions this graph is uniquely positioned to answer:_
   _Cohesion score 0.1 - nodes in this community are weakly interconnected._
 - **Why does `04 · Design Brief — ARQUITÉ | UI/UX, componentes y tokens` connect `04 · Design Brief — ARQUITÉ | UI/UX, componentes y tokens` to `DiamondView.tsx`?**
   _High betweenness centrality (0.062) - this node is a cross-community bridge._
-- **Should `compilerOptions` be split into smaller, more focused modules?**
-  _Cohesion score 0.09523809523809523 - nodes in this community are weakly interconnected._
+- **Should `DataRepository` be split into smaller, more focused modules?**
+  _Cohesion score 0.1443850267379679 - nodes in this community are weakly interconnected._
