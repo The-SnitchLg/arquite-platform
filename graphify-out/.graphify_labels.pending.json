@@ -16,7 +16,7 @@
   "14": "Reglas_Diseño/warm_editorial_roadmap/DESIGN.md",
   "15": "referencias_stitch/warm_editorial_roadmap/DESIGN.md",
   "16": "ARQUITÉ — Especificación funcional actualizada, decisiones de producto y backlog",
-  "17": "verify-fixes.mjs",
+  "17": "verify-all-reports-pdf.mjs",
   "18": "3. Regla exacta del doble diamante: versiones y renovación perpetua",
   "19": "ARQUITÉ · Paquete de especificaciones integrales v6.1",
   "20": "vercel.json",
@@ -29,6 +29,7 @@
   "27": "7. Panel de administrador: alcance funcional y seguridad",
   "28": "13. Fuentes y trazabilidad",
   "29": "8. Modelo de datos y transacciones recomendadas",
-  "30": "main.tsx",
-  "31": "ADR-001-Visual-Architecture-And-Data-Isolation.md"
+  "30": "JourneyData",
+  "31": "ADR-001-Visual-Architecture-And-Data-Isolation.md",
+  "32": "reportFilenames.ts"
 }

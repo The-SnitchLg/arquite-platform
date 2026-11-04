@@ -122,8 +122,8 @@ server.listen(4173, async () => {
     await page.click('nav button:has-text("Informes")');
     await page.waitForTimeout(500);
 
-    // Click "Ver y descargar informe"
-    await page.click('button:has-text("Ver y descargar informe (v1)")');
+    // Click "Ver (v1)"
+    await page.click('button:has-text("Ver (v1)")');
     await page.waitForTimeout(500);
 
     // Verify modal is open
@@ -145,29 +145,35 @@ server.listen(4173, async () => {
       throw new Error(`#root should be hidden in print but was ${rootDisplay}`);
     }
 
-    // Check that modal header chrome is hidden in print
-    const headerDisplay = await page.evaluate(() => {
-      const el = document.querySelector('.modal-header-section');
+    // Check that modal dialog content is hidden in print
+    const modalDisplay = await page.evaluate(() => {
+      const el = document.querySelector('.modal-dialog-content');
       return el ? window.getComputedStyle(el).display : null;
     });
-    console.log(`   ✓ Modal header chrome in print: "${headerDisplay}" (expected: "none")`);
-    if (headerDisplay !== 'none') {
-      throw new Error(`.modal-header-section should be hidden in print but was ${headerDisplay}`);
+    console.log(`   ✓ Modal dialog content in print: "${modalDisplay}" (expected: "none")`);
+    if (modalDisplay !== 'none') {
+      throw new Error(`.modal-dialog-content should be hidden in print but was ${modalDisplay}`);
     }
 
-    // Check that scroll container is unconstrained
-    const containerMaxHeight = await page.evaluate(() => {
-      const el = document.querySelector('.printable-scroll-container');
-      return el ? window.getComputedStyle(el).maxHeight : null;
+    // Check that dedicated #arquite-print-root is active in print
+    const printRootDisplay = await page.evaluate(() => {
+      const el = document.getElementById('arquite-print-root');
+      return el ? window.getComputedStyle(el).display : null;
     });
-    console.log(`   ✓ Scroll container maxHeight in print: "${containerMaxHeight}" (expected: "none")`);
+    console.log(`   ✓ Dedicated #arquite-print-root display in print: "${printRootDisplay}" (expected: "block")`);
+    if (printRootDisplay !== 'block') {
+      throw new Error(`#arquite-print-root should be display: block in print but was ${printRootDisplay}`);
+    }
 
     // Verify all contents of the printable report in print mode
     console.log('   Verifying printable report contents and completeness...');
-    const reportText = await page.innerText('.printable-report-wrapper');
+    const reportText = await page.evaluate(() => {
+      const el = document.getElementById('arquite-print-root');
+      return el ? (el.textContent || '') : '';
+    });
     const requiredTexts = [
       'Mi Arquitectura Estratégica',
-      'ARQUITÉ · ESTUDIO DE DIRECCIÓN ESTRATÉGICA',
+      'ARQUITÉ · ESTUDIO DE DIRECCIÓN Y ARQUITECTURA ESTRATÉGICA',
       'I. Las Tres Exploraciones del Contexto',
       'II. Las Diez Decisiones Estratégicas',
       'Dimensión Personal',
@@ -186,7 +192,7 @@ server.listen(4173, async () => {
     console.log(`   ✓ All required report sections, headings and decisions are present in the printable DOM! (${reportText.length} chars)`);
 
     // Verify diamond SVG in printable report has all 10 facets illuminated for Version 1
-    const printSvgFills = await page.$$eval('.printable-report-wrapper svg polygon', elements =>
+    const printSvgFills = await page.$$eval('#arquite-print-root svg polygon', elements =>
       elements.map(el => el.getAttribute('fill'))
     );
     const nonActiveFills = printSvgFills.filter(f => f === '#F7F5F0');

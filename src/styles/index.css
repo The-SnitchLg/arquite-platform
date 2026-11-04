@@ -58,11 +58,16 @@ body {
   background: var(--color-ink-muted);
 }
 
+/* Dedicated Print Isolation Root: Hidden on Screen */
+#arquite-print-root {
+  display: none;
+}
+
 /* Print Styles for autonomous editorial reports */
 @media print {
   @page {
     size: A4 portrait;
-    margin: 12mm 15mm 15mm 15mm;
+    margin: 0;
   }
 
   html, body {
@@ -70,65 +75,54 @@ body {
     color: #1E293B !important;
     margin: 0 !important;
     padding: 0 !important;
-    width: 100% !important;
-    min-height: 0 !important;
+    width: 210mm !important;
+    min-height: 297mm !important;
     overflow: visible !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
 
-  /* 1. Hide the entire application background when printing report */
+  /* 1. Hide the entire application background, navs, and Radix portals */
   #root,
   header,
   footer,
   nav,
   .no-print,
-  [data-radix-dialog-overlay] {
-    display: none !important;
-  }
-
-  /* 2. Un-fix the Radix Portal and Content for continuous A4 paged layout */
-  [data-radix-portal] {
-    position: static !important;
-    display: block !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    width: 100% !important;
-  }
-
+  [data-radix-portal],
+  [data-radix-dialog-overlay],
   .modal-dialog-content {
-    position: static !important;
-    transform: none !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    min-height: 0 !important;
-    height: auto !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    border: none !important;
-    box-shadow: none !important;
-    background: #ffffff !important;
-    overflow: visible !important;
-  }
-
-  /* Hide modal dialog chrome (header title, description, close icon) */
-  .modal-header-section {
     display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    width: 0 !important;
+    overflow: hidden !important;
   }
 
-  /* Unconstrain scroll container */
-  .printable-scroll-container {
-    max-height: none !important;
-    height: auto !important;
-    overflow: visible !important;
+  /* 2. Display ONLY the dedicated print root */
+  #arquite-print-root {
+    display: block !important;
+    visibility: visible !important;
+    position: static !important;
+    width: 210mm !important;
+    margin: 0 auto !important;
     padding: 0 !important;
-    margin: 0 !important;
-    border: none !important;
-    box-shadow: none !important;
     background: #ffffff !important;
+    box-sizing: border-box !important;
   }
 
-  /* Page break utilities */
+  /* 3. A4 Page layout with exact, centered margins */
+  .arquite-print-page {
+    width: 210mm !important;
+    min-height: 297mm !important;
+    box-sizing: border-box !important;
+    padding: 16mm 18mm !important;
+    margin: 0 auto !important;
+    background: #ffffff !important;
+    position: relative !important;
+    page-break-inside: auto !important;
+  }
+
+  /* 4. Controlled Page breaks */
   .print-page-break {
     page-break-after: always !important;
     break-after: page !important;
@@ -147,11 +141,13 @@ body {
     page-break-inside: avoid !important;
     break-inside: avoid !important;
     box-shadow: none !important;
-    border: 1px solid #CBD5E1 !important;
+    border: 1px solid #E2E8F0 !important;
   }
 
-  /* Preserve all colors, SVG fills, and gradients */
-  * {
+  /* 5. Disable animations & transitions during print */
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }

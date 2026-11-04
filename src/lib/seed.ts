@@ -149,9 +149,66 @@ export function createSampleJourneyForAdminDemo(): JourneyData {
   journey.thresholds[1].reflection = 'Diseñé una matriz de gobernanza que resolvió cuellos de botella recurrentes en la toma de decisiones.';
   journey.thresholds[1].evidence = 'Documento de arquitectura de decisiones implementado en el equipo.';
 
-  journey.thresholds[2].status = 'en_exploracion';
+  journey.thresholds[2].status = 'cambio_documentado';
   journey.thresholds[2].reflection = 'Transitando de la supervisión minuciosa a la delegación con marcos de autonomía claros.';
   journey.thresholds[2].evidence = 'Primer proyecto entregado con supervisión quincenal en lugar de diaria.';
+
+  journey.thresholds[3].status = 'accion_experimentada';
+  journey.thresholds[3].reflection = 'Mi identidad profesional ha evolucionado de ejecutor estrella a facilitador de condiciones para que otros triunfen.';
+  journey.thresholds[3].evidence = 'Mentoría formal de 3 líderes emergentes que hoy dirigen proyectos clave autónomamente.';
+
+  journey.thresholds[4].status = 'cambio_documentado';
+  journey.thresholds[4].reflection = 'Toma de decisiones difíciles desde la convicción interna y la verdad estratégica, sin depender de la complacencia externa.';
+  journey.thresholds[4].evidence = 'Rechazo ético y documentado a una propuesta que contradecía nuestros principios rectores.';
+
+  journey.thresholds[5].status = 'accion_experimentada';
+  journey.thresholds[5].reflection = 'Reserva innegociable de 6 horas semanales para la exploración de tendencias y diseño de escenarios a 3 años.';
+  journey.thresholds[5].evidence = 'Primer informe de prospectiva estratégica aprobado por el comité directivo.';
+
+  journey.thresholds[6].status = 'cambio_documentado';
+  journey.thresholds[6].reflection = 'Construcción de institucionalidad y cultura que perdurará más allá de mi ciclo en la organización.';
+  journey.thresholds[6].evidence = 'Creación del manual de gobernanza y fondo de desarrollo de capacidades organizacionales.';
+
+  // Add closure for Thresholds
+  journey.closures.push({
+    id: 'cls-umb-v1',
+    journeyId: journey.id,
+    module: 'thresholds',
+    editionNo: 1,
+    closedAt: '2026-10-30T14:20:00.000Z',
+    confirmedBy: DEMO_PARTICIPANT.id,
+    snapshot: journey.thresholds,
+    snapshotHash: 'hash-umb-v1-verified'
+  });
+
+  // Populate sample letters
+  journey.letters.personal = {
+    dimension: 'personal',
+    body: 'Querido yo del futuro:\n\nTe escribo estas líneas desde un momento de serena claridad y firme compromiso con lo esencial. Hoy he decidido que ganar en la vida no es acumular victorias efímeras ni reconocimientos ajenos, sino habitar cada día con congruencia profunda, presencia atenta y paz interior.\n\nEspero que al leer esto recuerdes el pacto que hicimos con el tiempo: cuidar tus horas de silencio, honrar tus vínculos más queridos y nunca negociar tu bienestar por una urgencia artificial. Que la sabiduría que hoy vislumbras sea tu brújula permanente.',
+    updatedAt: '2026-11-02T15:30:00.000Z',
+    isSealed: true,
+    sealedAt: '2026-11-02T16:00:00.000Z'
+  };
+
+  journey.letters.profesional = {
+    dimension: 'profesional',
+    body: 'Estimado líder del mañana:\n\nLa verdadera dirección estratégica no radica en poseer todas las respuestas ni en controlar cada detalle de la ejecución, sino en crear las condiciones propicias para que el talento colectivo florezca y construya valor duradero.\n\nRecuerda siempre la cascada de elecciones que fijamos en nuestro Diamante: competir donde somos singulares, ganar mediante la excelencia metodológica y forjar una cultura de integridad inquebrantable. Que tu liderazgo no se mida por lo que hiciste tú solo, sino por las capacidades que hiciste posibles en los demás.',
+    updatedAt: '2026-11-02T15:45:00.000Z',
+    isSealed: true,
+    sealedAt: '2026-11-02T16:10:00.000Z'
+  };
+
+  // Add closure for Letters
+  journey.closures.push({
+    id: 'cls-let-v1',
+    journeyId: journey.id,
+    module: 'letters',
+    editionNo: 1,
+    closedAt: '2026-11-02T16:10:00.000Z',
+    confirmedBy: DEMO_PARTICIPANT.id,
+    snapshot: journey.letters,
+    snapshotHash: 'hash-let-v1-verified'
+  });
 
   return journey;
 }

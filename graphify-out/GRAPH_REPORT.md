@@ -1,17 +1,17 @@
 # Graph Report - Arquite  (2026-11-03)
 
 ## Corpus Check
-- 43 files · ~365,310 words
+- 49 files · ~368,804 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 3 file(s) not represented in the graph (top: (none) 1, .css 1, .tsbuildinfo 1)
 
 ## Summary
-- 441 nodes · 808 edges · 32 communities (30 shown, 2 thin omitted)
+- 462 nodes · 864 edges · 33 communities (32 shown, 1 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 11 edges (avg confidence: 0.94)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `022c3259`
+- Built from commit: `83de57ab`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -33,7 +33,7 @@
 - Reglas_Diseño/warm_editorial_roadmap/DESIGN.md
 - referencias_stitch/warm_editorial_roadmap/DESIGN.md
 - ARQUITÉ — Especificación funcional actualizada, decisiones de producto y backlog
-- verify-fixes.mjs
+- verify-all-reports-pdf.mjs
 - 3. Regla exacta del doble diamante: versiones y renovación perpetua
 - ARQUITÉ · Paquete de especificaciones integrales v6.1
 - vercel.json
@@ -46,20 +46,21 @@
 - 7. Panel de administrador: alcance funcional y seguridad
 - 13. Fuentes y trazabilidad
 - 8. Modelo de datos y transacciones recomendadas
-- main.tsx
+- JourneyData
 - ADR-001-Visual-Architecture-And-Data-Isolation.md
+- reportFilenames.ts
 
 ## God Nodes (most connected - your core abstractions)
 1. `DataRepository` - 30 edges
-2. `JourneyData` - 21 edges
-3. `Button()` - 20 edges
-4. `Card()` - 19 edges
-5. `compilerOptions` - 19 edges
-6. `react` - 18 edges
-7. `Badge()` - 18 edges
-8. `isValidNarrative()` - 15 edges
-9. `02 · TRD — ARQUITÉ | Arquitectura y contratos técnicos` - 15 edges
-10. `ARQUITÉ — Especificación funcional actualizada, decisiones de producto y backlog` - 15 edges
+2. `JourneyData` - 25 edges
+3. `react` - 22 edges
+4. `Button()` - 20 edges
+5. `UserProfile` - 20 edges
+6. `Card()` - 19 edges
+7. `compilerOptions` - 19 edges
+8. `Badge()` - 18 edges
+9. `isValidNarrative()` - 15 edges
+10. `02 · TRD — ARQUITÉ | Arquitectura y contratos técnicos` - 15 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `F1 · Design system de alto impacto y shell React` --references--> `Button()`  [INFERRED]
@@ -76,23 +77,23 @@
 ## Import Cycles
 - None detected.
 
-## Communities (32 total, 2 thin omitted)
+## Communities (33 total, 1 thin omitted)
 
 ### Community 0 - "DiamondView.tsx"
-Cohesion: 0.18
-Nodes (33): 5. Catálogo de componentes a desarrollar, lucide-react, react, App(), AppHeader(), AppHeaderProps, NavTab, Badge() (+25 more)
+Cohesion: 0.13
+Nodes (42): 5. Catálogo de componentes a desarrollar, lucide-react, react, react-dom, App(), AppHeader(), Badge(), BadgeProps (+34 more)
 
 ### Community 1 - "domain.ts"
-Cohesion: 0.08
-Nodes (42): ChoiceComparisonItem, compareDiamondVersions(), computeDiff(), DiffStatus, ExplorationComparisonItem, calculateDiamondProgress(), calculateGlobalProgress(), calculateInterventionsProgress() (+34 more)
+Cohesion: 0.09
+Nodes (34): ChoiceComparisonItem, compareDiamondVersions(), computeDiff(), DiffStatus, ExplorationComparisonItem, CANONICAL_THRESHOLDS, createInitialInterventions(), createInitialThresholds() (+26 more)
 
 ### Community 2 - "package.json"
 Cohesion: 0.10
 Nodes (19): name, packageManager, private, type, version, clsx, motion, @radix-ui/react-accordion (+11 more)
 
 ### Community 3 - "DataRepository"
-Cohesion: 0.14
-Nodes (10): 7. Máquina del doble diamante y operaciones críticas, 8. Módulos independientes y ediciones, DiamondViewProps, InterventionsViewProps, LettersViewProps, ThresholdsViewProps, DataRepository, AuditEvent (+2 more)
+Cohesion: 0.18
+Nodes (5): 7. Máquina del doble diamante y operaciones críticas, 8. Módulos independientes y ediciones, DataRepository, AuditEvent, Dimension
 
 ### Community 4 - "compilerOptions"
 Cohesion: 0.10
@@ -146,9 +147,9 @@ Nodes (13): Brand & Style, Buttons, Chips & Pathway Badges, Color Roles & Guidel
 Cohesion: 0.20
 Nodes (9): 10. Casos de prueba y criterios de liberación, 11. Estrategia de implementación sin perder el demo existente, 12. Decisiones técnicas residuales (sin alterar requisitos confirmados), 14. Inventario de archivos del paquete entregado, 1.1 Principios no negociables, 1. Resumen ejecutivo y qué cambia frente al documento anterior, 2.1 Marco estratégico de los diez campos, 2. Arquitectura de contenidos conservada (estado actual del demo) (+1 more)
 
-### Community 17 - "verify-fixes.mjs"
-Cohesion: 0.22
-Nodes (4): playwright, distDir, mimeTypes, server
+### Community 17 - "verify-all-reports-pdf.mjs"
+Cohesion: 0.18
+Nodes (7): playwright, distDir, mimeTypes, server, distDir, mimeTypes, server
 
 ### Community 18 - "3. Regla exacta del doble diamante: versiones y renovación perpetua"
 Cohesion: 0.25
@@ -167,8 +168,8 @@ Cohesion: 0.29
 Nodes (6): 🔐 Acceso al Sistema, 🏛️ Arquitectura & Tecnologías, ARQUITÉ — Estudio de Dirección Estratégica & Liderazgo, 📂 Grafo de Conocimiento (Graphify), 🚀 Puesta en Marcha Rápida, 💎 Reglas Centrales de Producto
 
 ### Community 22 - "scripts"
-Cohesion: 0.33
-Nodes (6): scripts, build, dev, preview, test, test:e2e
+Cohesion: 0.29
+Nodes (7): scripts, build, dev, preview, test, test:e2e, test:pdf
 
 ### Community 23 - "5. Descargables con diseño diferenciado y contenido completo"
 Cohesion: 0.40
@@ -198,25 +199,33 @@ Nodes (3): 13. Fuentes y trazabilidad, Fuentes externas contrastadas para fundam
 Cohesion: 0.67
 Nodes (3): 8.1 Pseudocódigo seguro de renovación, 8.2 Migración desde el demo, 8. Modelo de datos y transacciones recomendadas
 
+### Community 30 - "JourneyData"
+Cohesion: 0.18
+Nodes (13): AppHeaderProps, NavTab, AdminViewProps, DiamondViewProps, InterventionsViewProps, LettersViewProps, PanoramaViewProps, ReportsHubViewProps (+5 more)
+
+### Community 32 - "reportFilenames.ts"
+Cohesion: 0.67
+Nodes (3): formatISODate(), getReportFilename(), ReportFilenameMeta
+
 ## Knowledge Gaps
 - **13 isolated node(s):** `@radix-ui/react-accordion`, `@radix-ui/react-tabs`, `@radix-ui/react-tooltip`, `@supabase/supabase-js`, `clsx` (+8 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 274 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **2 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 278 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **1 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `react` connect `DiamondView.tsx` to `domain.ts`, `package.json`, `main.tsx`?**
-  _High betweenness centrality (0.079) - this node is a cross-community bridge._
+- **Why does `react` connect `DiamondView.tsx` to `domain.ts`, `package.json`, `JourneyData`?**
+  _High betweenness centrality (0.090) - this node is a cross-community bridge._
 - **What connects `@radix-ui/react-accordion`, `@radix-ui/react-tabs`, `@radix-ui/react-tooltip` to the rest of the system?**
   _13 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `domain.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.08069381598793364 - nodes in this community are weakly interconnected._
+- **Should `DiamondView.tsx` be split into smaller, more focused modules?**
+  _Cohesion score 0.13114754098360656 - nodes in this community are weakly interconnected._
 - **Why does `5. Catálogo de componentes a desarrollar` connect `DiamondView.tsx` to `04 · Design Brief — ARQUITÉ | UI/UX, componentes y tokens`?**
-  _High betweenness centrality (0.062) - this node is a cross-community bridge._
+  _High betweenness centrality (0.061) - this node is a cross-community bridge._
+- **Should `domain.ts` be split into smaller, more focused modules?**
+  _Cohesion score 0.08562367864693446 - nodes in this community are weakly interconnected._
+- **Why does `04 · Design Brief — ARQUITÉ | UI/UX, componentes y tokens` connect `04 · Design Brief — ARQUITÉ | UI/UX, componentes y tokens` to `DiamondView.tsx`?**
+  _High betweenness centrality (0.061) - this node is a cross-community bridge._
 - **Should `package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.1 - nodes in this community are weakly interconnected._
-- **Why does `04 · Design Brief — ARQUITÉ | UI/UX, componentes y tokens` connect `04 · Design Brief — ARQUITÉ | UI/UX, componentes y tokens` to `DiamondView.tsx`?**
-  _High betweenness centrality (0.062) - this node is a cross-community bridge._
-- **Should `DataRepository` be split into smaller, more focused modules?**
-  _Cohesion score 0.1443850267379679 - nodes in this community are weakly interconnected._
