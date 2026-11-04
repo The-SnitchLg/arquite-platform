@@ -13,7 +13,8 @@ import {
   Search, 
   Shield, 
   Eye, 
-  History 
+  History,
+  RefreshCw
 } from 'lucide-react';
 import { CANONICAL_EXPLORATIONS } from '../../domain/constants';
 
@@ -25,6 +26,17 @@ export const AdminView: React.FC<AdminViewProps> = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedJourney, setSelectedJourney] = useState<JourneyData | null>(null);
   const [activeTab, setActiveTab] = useState<'receipts' | 'audit'>('receipts');
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  React.useEffect(() => {
+    repository.loadAdminData();
+  }, []);
+
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    await repository.loadAdminData();
+    setIsRefreshing(false);
+  };
 
   const receipts = repository.getAdminReceipts();
   const auditEvents = repository.getAuditEvents();
@@ -64,24 +76,36 @@ export const AdminView: React.FC<AdminViewProps> = () => {
           </p>
         </div>
 
-        {/* Tab switch between Receipts and Audit Logs */}
-        <div className="flex items-center bg-surface-white p-1 rounded-lg border border-border-subtle">
+        {/* Tab switch between Receipts and Audit Logs & Refresh Button */}
+        <div className="flex items-center gap-2">
           <button
-            onClick={() => setActiveTab('receipts')}
-            className={`px-3.5 py-1.5 rounded-md text-xs font-semibold cursor-pointer transition-all ${
-              activeTab === 'receipts' ? 'bg-primary text-white shadow-xs' : 'text-ink-muted hover:text-ink'
-            }`}
+            onClick={handleRefresh}
+            disabled={isRefreshing}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border-subtle bg-surface-white text-xs font-medium text-ink-muted hover:text-ink hover:bg-neutral-50 transition-all cursor-pointer"
+            title="Sincronizar con base de datos Supabase"
           >
-            Recepciones y Expedientes ({totalParticipants})
+            <RefreshCw className={`w-3.5 h-3.5 text-primary ${isRefreshing ? 'animate-spin' : ''}`} />
+            <span>{isRefreshing ? 'Sincronizando...' : 'Actualizar'}</span>
           </button>
-          <button
-            onClick={() => setActiveTab('audit')}
-            className={`px-3.5 py-1.5 rounded-md text-xs font-semibold cursor-pointer transition-all ${
-              activeTab === 'audit' ? 'bg-primary text-white shadow-xs' : 'text-ink-muted hover:text-ink'
-            }`}
-          >
-            Pista de Auditoría ({auditEvents.length})
-          </button>
+
+          <div className="flex items-center bg-surface-white p-1 rounded-lg border border-border-subtle">
+            <button
+              onClick={() => setActiveTab('receipts')}
+              className={`px-3.5 py-1.5 rounded-md text-xs font-semibold cursor-pointer transition-all ${
+                activeTab === 'receipts' ? 'bg-primary text-white shadow-xs' : 'text-ink-muted hover:text-ink'
+              }`}
+            >
+              Recepciones y Expedientes ({totalParticipants})
+            </button>
+            <button
+              onClick={() => setActiveTab('audit')}
+              className={`px-3.5 py-1.5 rounded-md text-xs font-semibold cursor-pointer transition-all ${
+                activeTab === 'audit' ? 'bg-primary text-white shadow-xs' : 'text-ink-muted hover:text-ink'
+              }`}
+            >
+              Pista de Auditoría ({auditEvents.length})
+            </button>
+          </div>
         </div>
       </div>
 

@@ -14,25 +14,33 @@ export const AuthView: React.FC<AuthViewProps> = ({ onSuccess }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setIsLoading(true);
 
-    if (isRegister) {
-      const res = repository.register(name, email, password);
-      if (res.success) {
-        onSuccess();
+    try {
+      if (isRegister) {
+        const res = await repository.register(name, email, password);
+        if (res.success) {
+          onSuccess();
+        } else {
+          setError(res.error || 'Error al crear la cuenta.');
+        }
       } else {
-        setError(res.error || 'Error al crear la cuenta.');
+        const res = await repository.login(email, password);
+        if (res.success) {
+          onSuccess();
+        } else {
+          setError(res.error || 'Credenciales inválidas.');
+        }
       }
-    } else {
-      const res = repository.login(email, password);
-      if (res.success) {
-        onSuccess();
-      } else {
-        setError(res.error || 'Credenciales inválidas.');
-      }
+    } catch (err: any) {
+      setError(err?.message || 'Error de conexión.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -108,9 +116,9 @@ export const AuthView: React.FC<AuthViewProps> = ({ onSuccess }) => {
               />
             </div>
 
-            <Button type="submit" variant="primary" fullWidth size="lg" className="mt-2">
-              <span>{isRegister ? 'Crear mi cuenta' : 'Ingresar al estudio'}</span>
-              <ArrowRight className="w-4 h-4 ml-1" />
+            <Button type="submit" variant="primary" fullWidth size="lg" className="mt-2" disabled={isLoading}>
+              <span>{isLoading ? 'Conectando...' : (isRegister ? 'Crear mi cuenta' : 'Ingresar al estudio')}</span>
+              {!isLoading && <ArrowRight className="w-4 h-4 ml-1" />}
             </Button>
           </form>
 
