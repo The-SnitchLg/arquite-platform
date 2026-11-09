@@ -1,5 +1,44 @@
-import { DiamondVersion, ThresholdRecord, InterventionRecord, LetterRecord, ProgressSummary, Dimension } from '../types/domain';
+import { DiamondVersion, ProfDiamondVersion, ThresholdRecord, InterventionRecord, LetterRecord, ProgressSummary, Dimension } from '../types/domain';
 import { isValidNarrative } from './constants';
+
+export function calculateProfDiamondProgress(version: ProfDiamondVersion | null): {
+  explorationsValid: number;
+  decisionsValid: number;
+  decisionsProfessionalValid: number;
+  facets: number;
+  totalUnits: number;
+  readyToClose: boolean;
+  isClosed: boolean;
+} {
+  if (!version) {
+    return {
+      explorationsValid: 0,
+      decisionsValid: 0,
+      decisionsProfessionalValid: 0,
+      facets: 0,
+      totalUnits: 0,
+      readyToClose: false,
+      isClosed: false
+    };
+  }
+
+  const expCount = Object.values(version.contexts).filter(isValidNarrative).length;
+  const decisionsValid = (version.professionalAnswers || []).filter(isValidNarrative).length;
+  const facets = decisionsValid; // 0..5
+  const totalUnits = expCount + decisionsValid; // 0..8
+  const readyToClose = totalUnits === 8;
+  const isClosed = version.status === 'closed';
+
+  return {
+    explorationsValid: expCount,
+    decisionsValid,
+    decisionsProfessionalValid: decisionsValid,
+    facets,
+    totalUnits,
+    readyToClose,
+    isClosed
+  };
+}
 
 export function calculateDiamondProgress(version: DiamondVersion | null): {
   explorationsValid: number;

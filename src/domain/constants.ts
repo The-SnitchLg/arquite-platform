@@ -38,6 +38,30 @@ export const CANONICAL_EXPLORATIONS: ExplorationMeta[] = [
   }
 ];
 
+export const CANONICAL_PROF_EXPLORATIONS: ExplorationMeta[] = [
+  {
+    key: 'entorno',
+    title: 'Entorno Profesional & Sectorial',
+    question: '¿Qué dinámicas y demandas condicionan tu contexto profesional?',
+    guidance: 'Analiza el mercado, las transformaciones de tu sector, las expectativas de los grupos de interés clave y las restricciones que delimitan tu campo de acción.',
+    iconName: 'Compass'
+  },
+  {
+    key: 'talentos',
+    title: 'Talentos Singulares de Liderazgo',
+    question: '¿Cuáles son tus ventajas comparativas y fortalezas distintivas?',
+    guidance: 'Identifica las capacidades gerenciales, conocimientos de vanguardia y atributos de influencia que te diferencian y potencian tu efectividad.',
+    iconName: 'Sparkles'
+  },
+  {
+    key: 'posibilidades',
+    title: 'Posibilidades Estratégicas Futuras',
+    question: '¿Qué horizontes de oportunidad y desarrollo puedes desbloquear?',
+    guidance: 'Delinea las opciones estratégicas de mayor impacto, nuevas iniciativas o transformaciones viables que puedes liderar a partir de tus ventajas.',
+    iconName: 'Lightbulb'
+  }
+];
+
 export interface StageChoiceMeta {
   index: number; // 0..4
   title: string;

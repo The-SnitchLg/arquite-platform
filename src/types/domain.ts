@@ -28,6 +28,20 @@ export interface DiamondVersion {
   revision: number;
 }
 
+export interface ProfDiamondVersion {
+  id: string;
+  journeyId: string;
+  versionNumber: number;
+  slot: DiamondSlot;
+  status: DiamondStatus;
+  startedAt: string;
+  closedAt?: string;
+  confirmedBy?: string;
+  contexts: Record<ContextKey, string>;
+  professionalAnswers: string[]; // 5 choices
+  revision: number;
+}
+
 export type ThresholdStatus = 
   | 'sin_iniciar' 
   | 'en_exploracion' 
@@ -72,7 +86,7 @@ export interface LetterRecord {
   sealedAt?: string;
 }
 
-export type ModuleType = 'diamond' | 'thresholds' | 'letters';
+export type ModuleType = 'diamond' | 'diamond_pro' | 'thresholds' | 'letters';
 
 export interface ModuleClosure {
   id: string;
@@ -118,6 +132,8 @@ export interface JourneyData {
   updatedAt: string;
   diamondSlotA: DiamondVersion | null;
   diamondSlotB: DiamondVersion | null;
+  profDiamondSlotA: ProfDiamondVersion | null;
+  profDiamondSlotB: ProfDiamondVersion | null;
   thresholds: ThresholdRecord[];
   interventions: InterventionRecord[];
   letters: Record<Dimension, LetterRecord>;

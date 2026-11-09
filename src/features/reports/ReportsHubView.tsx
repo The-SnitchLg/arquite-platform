@@ -5,6 +5,7 @@ import { Button } from '../../components/ui/Button';
 import { Badge } from '../../components/ui/Badge';
 import { Modal } from '../../components/ui/Modal';
 import { DiamondReport } from './templates/DiamondReport';
+import { ProfDiamondReport } from './templates/ProfDiamondReport';
 import { ThresholdsReport } from './templates/ThresholdsReport';
 import { FutureLettersReport } from './templates/FutureLettersReport';
 import { PrintPortal } from './PrintPortal';
@@ -27,6 +28,7 @@ interface ReportsHubViewProps {
 export const ReportsHubView: React.FC<ReportsHubViewProps> = ({ user, journey }) => {
   const [previewModule, setPreviewModule] = useState<ModuleType | null>(null);
   const [selectedDiamondSlot, setSelectedDiamondSlot] = useState<'A' | 'B'>('A');
+  const [selectedProfDiamondSlot, setSelectedProfDiamondSlot] = useState<'A' | 'B'>('A');
   const [activePrintModule, setActivePrintModule] = useState<ModuleType | null>(null);
   const [activePrintSlot, setActivePrintSlot] = useState<'A' | 'B'>('A');
 
@@ -36,6 +38,10 @@ export const ReportsHubView: React.FC<ReportsHubViewProps> = ({ user, journey })
   // Closed versions for diamond
   const slotAVersion = journey.diamondSlotA?.status === 'closed' ? journey.diamondSlotA : null;
   const slotBVersion = journey.diamondSlotB?.status === 'closed' ? journey.diamondSlotB : null;
+
+  // Closed versions for prof diamond
+  const profSlotAVersion = journey.profDiamondSlotA?.status === 'closed' ? journey.profDiamondSlotA : null;
+  const profSlotBVersion = journey.profDiamondSlotB?.status === 'closed' ? journey.profDiamondSlotB : null;
   
   // Resolve current active diamond version for preview
   const previewDiamondVersion = (selectedDiamondSlot === 'B' && slotBVersion) 
@@ -47,6 +53,16 @@ export const ReportsHubView: React.FC<ReportsHubViewProps> = ({ user, journey })
     ? slotBVersion
     : (slotAVersion || slotBVersion);
 
+  // Resolve current active prof diamond version for preview
+  const previewProfDiamondVersion = (selectedProfDiamondSlot === 'B' && profSlotBVersion)
+    ? profSlotBVersion
+    : (profSlotAVersion || profSlotBVersion);
+
+  // Resolve current active prof diamond version for print
+  const printProfDiamondVersion = (activePrintSlot === 'B' && profSlotBVersion)
+    ? profSlotBVersion
+    : (profSlotAVersion || profSlotBVersion);
+
   // Restore document title after print dialog closes
   useEffect(() => {
     const handleAfterPrint = () => {
@@ -57,11 +73,18 @@ export const ReportsHubView: React.FC<ReportsHubViewProps> = ({ user, journey })
     return () => window.removeEventListener('afterprint', handleAfterPrint);
   }, []);
 
-  const handlePrint = (module: ModuleType, slot: 'A' | 'B' = selectedDiamondSlot) => {
+  const handlePrint = (module: ModuleType, slot: 'A' | 'B' = (module === 'diamond_pro' ? selectedProfDiamondSlot : selectedDiamondSlot)) => {
     let filename = '';
     if (module === 'diamond') {
       const ver = (slot === 'B' && slotBVersion) ? slotBVersion : (slotAVersion || slotBVersion);
       filename = getReportFilename('diamond', {
+        version: ver?.versionNumber || 1,
+        date: ver?.closedAt || new Date()
+      });
+      setActivePrintSlot(slot);
+    } else if (module === 'diamond_pro') {
+      const ver = (slot === 'B' && profSlotBVersion) ? profSlotBVersion : (profSlotAVersion || profSlotBVersion);
+      filename = getReportFilename('diamond_pro', {
         version: ver?.versionNumber || 1,
         date: ver?.closedAt || new Date()
       });
@@ -95,12 +118,12 @@ export const ReportsHubView: React.FC<ReportsHubViewProps> = ({ user, journey })
           Entregables e Informes Autónomos
         </h1>
         <p className="mt-1 text-sm text-ink-muted">
-          Tres documentos de calidad editorial independientes. Cada informe se habilita al alcanzar el 100% de sus propios requisitos, sin depender de los otros módulos.
+          Cuatro documentos de calidad editorial independientes. Cada informe se habilita al alcanzar el 100% de sus propios requisitos, sin depender de los otros módulos.
         </p>
       </div>
 
-      {/* The 3 Autonomous Deliverables Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {/* The 4 Autonomous Deliverables Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Report 1: Mi Diamante */}
         <Card padding="lg" className="flex flex-col justify-between">
           <div>
@@ -181,6 +204,91 @@ export const ReportsHubView: React.FC<ReportsHubViewProps> = ({ user, journey })
               <div className="p-3 bg-canvas-subtle rounded-lg text-xs text-ink-muted flex items-center gap-2">
                 <Lock className="w-4 h-4 text-ink-muted flex-shrink-0" />
                 <span>Requiere completar 13/13 y confirmar el diamante.</span>
+              </div>
+            )}
+          </div>
+        </Card>
+
+        {/* Report 1b: Mi Diamante Profesional */}
+        <Card padding="lg" className="flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-10 h-10 rounded-xl bg-teal-50 border border-teal-200 text-teal-700 flex items-center justify-center">
+                <Sparkles className="w-5 h-5" />
+              </div>
+              <Badge variant={previewProfDiamondVersion ? 'sage' : 'neutral'}>
+                {previewProfDiamondVersion ? 'Disponible' : 'Bloqueado'}
+              </Badge>
+            </div>
+
+            <h3 className="font-editorial text-2xl text-ink font-normal mb-1">
+              Mi Arquitectura Profesional
+            </h3>
+            <span className="text-xs font-semibold uppercase tracking-wider text-teal-700 block mb-3">
+              Informe Diamante Profesional
+            </span>
+            <p className="text-xs text-ink-muted leading-relaxed mb-6">
+              Documento con portada editorial, SVG con 5 facetas activas, 3 exploraciones del entorno profesional y 5 decisiones estratégicas completas.
+            </p>
+          </div>
+
+          <div className="pt-4 border-t border-border-subtle flex flex-col gap-2">
+            {profSlotAVersion && (
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="md"
+                  onClick={() => {
+                    setSelectedProfDiamondSlot('A');
+                    setPreviewModule('diamond_pro');
+                  }}
+                  className="gap-2 flex-1"
+                >
+                  <Eye className="w-4 h-4" />
+                  <span>Ver (v{profSlotAVersion.versionNumber})</span>
+                </Button>
+                <Button
+                  variant="primary"
+                  size="md"
+                  onClick={() => handlePrint('diamond_pro', 'A')}
+                  className="gap-2 px-3"
+                  title="Descargar PDF v1"
+                >
+                  <Download className="w-4 h-4" />
+                  <span className="hidden sm:inline">PDF</span>
+                </Button>
+              </div>
+            )}
+            {profSlotBVersion && (
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="md"
+                  onClick={() => {
+                    setSelectedProfDiamondSlot('B');
+                    setPreviewModule('diamond_pro');
+                  }}
+                  className="gap-2 flex-1"
+                >
+                  <Eye className="w-4 h-4" />
+                  <span>Ver (v{profSlotBVersion.versionNumber})</span>
+                </Button>
+                <Button
+                  variant="primary"
+                  size="md"
+                  onClick={() => handlePrint('diamond_pro', 'B')}
+                  className="gap-2 px-3"
+                  title="Descargar PDF v2"
+                >
+                  <Download className="w-4 h-4" />
+                  <span className="hidden sm:inline">PDF</span>
+                </Button>
+              </div>
+            )}
+            {!profSlotAVersion && !profSlotBVersion && (
+              <div className="p-3 bg-canvas-subtle rounded-lg text-xs text-ink-muted flex items-center gap-2">
+                <Lock className="w-4 h-4 text-ink-muted flex-shrink-0" />
+                <span>Requiere completar 8/8 y confirmar el diamante profesional.</span>
               </div>
             )}
           </div>
@@ -304,6 +412,8 @@ export const ReportsHubView: React.FC<ReportsHubViewProps> = ({ user, journey })
         title={
           previewModule === 'diamond'
             ? 'Informe: Mi Arquitectura Estratégica'
+            : previewModule === 'diamond_pro'
+            ? 'Informe: Mi Arquitectura Estratégica Profesional'
             : previewModule === 'thresholds'
             ? 'Informe: Mapa de Evolución'
             : 'Informe: Cartas a mi Yo Futuro'
@@ -338,12 +448,32 @@ export const ReportsHubView: React.FC<ReportsHubViewProps> = ({ user, journey })
                   </button>
                 </div>
               )}
+              {previewModule === 'diamond_pro' && profSlotAVersion && profSlotBVersion && (
+                <div className="flex items-center gap-1 bg-canvas-subtle p-1 rounded-lg border border-border-subtle text-xs">
+                  <button
+                    onClick={() => setSelectedProfDiamondSlot('A')}
+                    className={`px-2.5 py-1 rounded text-xs font-semibold cursor-pointer ${
+                      selectedProfDiamondSlot === 'A' ? 'bg-primary text-white' : 'text-ink-muted hover:text-ink'
+                    }`}
+                  >
+                    Versión 1
+                  </button>
+                  <button
+                    onClick={() => setSelectedProfDiamondSlot('B')}
+                    className={`px-2.5 py-1 rounded text-xs font-semibold cursor-pointer ${
+                      selectedProfDiamondSlot === 'B' ? 'bg-primary text-white' : 'text-ink-muted hover:text-ink'
+                    }`}
+                  >
+                    Versión 2
+                  </button>
+                </div>
+              )}
             </div>
 
             <Button
               variant="primary"
               size="sm"
-              onClick={() => previewModule && handlePrint(previewModule, selectedDiamondSlot)}
+              onClick={() => previewModule && handlePrint(previewModule, previewModule === 'diamond_pro' ? selectedProfDiamondSlot : selectedDiamondSlot)}
               className="gap-2 shrink-0"
             >
               <Printer className="w-4 h-4" />
@@ -356,6 +486,12 @@ export const ReportsHubView: React.FC<ReportsHubViewProps> = ({ user, journey })
             {previewModule === 'diamond' && previewDiamondVersion && (
               <div className="bg-white p-6 rounded-xl shadow-card border border-border-subtle max-w-[800px] mx-auto">
                 <DiamondReport version={previewDiamondVersion} user={user} />
+              </div>
+            )}
+
+            {previewModule === 'diamond_pro' && previewProfDiamondVersion && (
+              <div className="bg-white p-6 rounded-xl shadow-card border border-border-subtle max-w-[800px] mx-auto">
+                <ProfDiamondReport version={previewProfDiamondVersion} user={user} />
               </div>
             )}
 
@@ -381,6 +517,14 @@ export const ReportsHubView: React.FC<ReportsHubViewProps> = ({ user, journey })
             (printDiamondVersion || previewDiamondVersion) && (
               <DiamondReport
                 version={printDiamondVersion || previewDiamondVersion!}
+                user={user}
+              />
+            )}
+
+          {(activePrintModule === 'diamond_pro' || (!activePrintModule && previewModule === 'diamond_pro')) &&
+            (printProfDiamondVersion || previewProfDiamondVersion) && (
+              <ProfDiamondReport
+                version={printProfDiamondVersion || previewProfDiamondVersion!}
                 user={user}
               />
             )}

@@ -3,6 +3,7 @@
  *
  * Implements Phase 4 standards:
  * - ARQUITE_Diamante_Estrategico_v{version}_{YYYY-MM-DD}.pdf
+ * - ARQUITE_Diamante_Profesional_v{version}_{YYYY-MM-DD}.pdf
  * - ARQUITE_Siete_Umbrales_{YYYY-MM-DD}.pdf
  * - ARQUITE_Cartas_al_Futuro_{YYYY-MM-DD}.pdf
  *
@@ -27,7 +28,7 @@ export function formatISODate(input?: string | Date): string {
 }
 
 export function getReportFilename(
-  module: 'diamond' | 'thresholds' | 'letters',
+  module: 'diamond' | 'diamond_pro' | 'thresholds' | 'letters',
   meta: ReportFilenameMeta = {}
 ): string {
   const dateStr = formatISODate(meta.date);
@@ -36,6 +37,10 @@ export function getReportFilename(
     case 'diamond': {
       const v = meta.version ?? 1;
       return `ARQUITE_Diamante_Estrategico_v${v}_${dateStr}.pdf`;
+    }
+    case 'diamond_pro': {
+      const v = meta.version ?? 1;
+      return `ARQUITE_Diamante_Profesional_v${v}_${dateStr}.pdf`;
     }
     case 'thresholds':
       return `ARQUITE_Siete_Umbrales_${dateStr}.pdf`;

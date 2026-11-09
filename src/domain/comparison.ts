@@ -1,5 +1,5 @@
-import { DiamondVersion, ContextKey } from '../types/domain';
-import { CANONICAL_EXPLORATIONS, CANONICAL_STAGES } from './constants';
+import { DiamondVersion, ProfDiamondVersion, ContextKey } from '../types/domain';
+import { CANONICAL_EXPLORATIONS, CANONICAL_PROF_EXPLORATIONS, CANONICAL_STAGES } from './constants';
 
 export type DiffStatus = 'sin_cambios' | 'modificado' | 'agregado';
 
@@ -96,6 +96,63 @@ export function compareDiamondVersions(
   return {
     explorations,
     personalChoices,
+    professionalChoices,
+    summary: {
+      totalFields: allStatuses.length,
+      modified: allStatuses.filter(s => s === 'modificado').length,
+      added: allStatuses.filter(s => s === 'agregado').length,
+      unchanged: allStatuses.filter(s => s === 'sin_cambios').length
+    }
+  };
+}
+
+export function compareProfDiamondVersions(
+  versionA: ProfDiamondVersion | null,
+  versionB: ProfDiamondVersion | null
+): {
+  explorations: ExplorationComparisonItem[];
+  professionalChoices: ChoiceComparisonItem[];
+  summary: {
+    totalFields: number; // 8
+    modified: number;
+    added: number;
+    unchanged: number;
+  };
+} {
+  const explorations: ExplorationComparisonItem[] = CANONICAL_PROF_EXPLORATIONS.map(exp => {
+    const textA = versionA?.contexts?.[exp.key] || '';
+    const textB = versionB?.contexts?.[exp.key] || '';
+    return {
+      key: exp.key,
+      title: exp.title,
+      question: exp.question,
+      contextA: textA,
+      contextB: textB,
+      status: computeDiff(textA, textB)
+    };
+  });
+
+  const professionalChoices: ChoiceComparisonItem[] = CANONICAL_STAGES.map(stage => {
+    const textA = versionA?.professionalAnswers?.[stage.index] || '';
+    const textB = versionB?.professionalAnswers?.[stage.index] || '';
+    return {
+      dimension: 'profesional',
+      index: stage.index,
+      title: stage.title,
+      question: stage.coreQuestion,
+      answerA: textA,
+      answerB: textB,
+      status: computeDiff(textA, textB)
+    };
+  });
+
+  const allStatuses = [
+    ...explorations.map(e => e.status),
+    ...professionalChoices.map(c => c.status)
+  ];
+
+  return {
+    explorations,
     professionalChoices,
     summary: {
       totalFields: allStatuses.length,

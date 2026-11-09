@@ -160,6 +160,66 @@ server.listen(4174, async () => {
     await page.waitForTimeout(400);
 
     // =========================================================================
+    // TEST REPORT 1b: PROFESSIONAL DIAMOND REPORT (Mi Arquitectura Profesional)
+    // =========================================================================
+    console.log('\n--- TESTING REPORT 1b: PROFESSIONAL DIAMOND REPORT (v1) ---');
+    
+    // Click "Ver (v1)" inside the Professional Diamond card
+    const verProfDiamondBtn = page.getByRole('button', { name: 'Ver (v1)' }).nth(1);
+    await verProfDiamondBtn.click();
+    await page.waitForTimeout(400);
+
+    // Verify modal opened
+    const profModalTitle = await page.textContent('[role="dialog"] h2');
+    console.log(`   ✓ Preview modal open: "${profModalTitle}"`);
+
+    // Emulate print media
+    await page.emulateMedia({ media: 'print' });
+
+    // Verify dedicated #arquite-print-root has the 5 facets SVG and the 3 explorations + 5 decisions
+    const profPrintText = await page.$eval('#arquite-print-root', el => el.textContent || '');
+    const requiredProfTexts = [
+      'Mi Arquitectura Estratégica Profesional',
+      'I. Las Tres Exploraciones del Contexto Profesional',
+      'II. Las Cinco Decisiones Estratégicas Profesionales',
+      'Aspiración ganadora',
+      'Dónde jugar',
+      'Cómo ganar',
+      'Con qué capacidades',
+      'Sistemas de gestión',
+      'Página 1 de 2',
+      'Página 2 de 2'
+    ];
+    for (const req of requiredProfTexts) {
+      if (!profPrintText.includes(req)) {
+        throw new Error(`Professional Diamond report missing expected text: "${req}"`);
+      }
+    }
+    console.log(`   ✓ Professional Diamond editorial print content verified! (${profPrintText.length} chars)`);
+
+    // Check SVG polygons in print root: 5 illuminated facets
+    const profSvgFills = await page.$$eval('#arquite-print-root svg polygon', els => els.map(e => e.getAttribute('fill')));
+    console.log(`   ✓ Professional Diamond SVG in print: ${profSvgFills.length} polygons found`);
+    if (profSvgFills.length < 5) {
+      throw new Error(`Expected at least 5 polygons in DiamondSvg5, found ${profSvgFills.length}`);
+    }
+
+    // Generate real PDF for Professional Diamond Report v1
+    const profDiamondPdfBuffer = await page.pdf({
+      format: 'A4',
+      printBackground: true,
+      preferCSSPageSize: true
+    });
+    const profDiamondPdfFilename = 'ARQUITE_Diamante_Profesional_v1_2026-11-03.pdf';
+    writeFileSync(profDiamondPdfFilename, profDiamondPdfBuffer);
+    console.log(`   🎉 Generated PDF: ${profDiamondPdfFilename} (${(profDiamondPdfBuffer.length / 1024).toFixed(1)} KB)`);
+
+    // Close preview modal
+    await page.emulateMedia({ media: 'screen' });
+    await page.click('button:has-text("Cerrar")');
+    await page.waitForTimeout(400);
+
+    // =========================================================================
     // TEST REPORT 2: SEVEN THRESHOLDS REPORT (Mapa de Evolución de Liderazgo)
     // =========================================================================
     console.log('\n--- TESTING REPORT 2: SEVEN THRESHOLDS REPORT ---');
@@ -259,10 +319,11 @@ server.listen(4174, async () => {
     console.log(`   🎉 Generated PDF: ${lettersPdfFilename} (${(lettersPdfBuffer.length / 1024).toFixed(1)} KB)`);
 
     console.log('\n======================================================');
-    console.log('✅ ALL 3 MODULE REPORTS PASSED FULL VERIFICATION!');
+    console.log('✅ ALL 4 MODULE REPORTS PASSED FULL VERIFICATION!');
     console.log('  1. ' + diamondPdfFilename + ' (Generated & verified)');
-    console.log('  2. ' + thresholdsPdfFilename + ' (Generated & verified)');
-    console.log('  3. ' + lettersPdfFilename + ' (Generated & verified)');
+    console.log('  2. ' + profDiamondPdfFilename + ' (Generated & verified)');
+    console.log('  3. ' + thresholdsPdfFilename + ' (Generated & verified)');
+    console.log('  4. ' + lettersPdfFilename + ' (Generated & verified)');
     console.log('======================================================\n');
 
   } catch (err) {

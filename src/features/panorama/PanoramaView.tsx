@@ -1,6 +1,6 @@
 import React from 'react';
 import { JourneyData, UserProfile } from '../../types/domain';
-import { calculateGlobalProgress, calculateDiamondProgress } from '../../domain/completeness';
+import { calculateGlobalProgress, calculateDiamondProgress, calculateProfDiamondProgress } from '../../domain/completeness';
 import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
 import { Button } from '../../components/ui/Button';
@@ -17,6 +17,10 @@ export const PanoramaView: React.FC<PanoramaViewProps> = ({ user, journey, onNav
   // Determine active diamond (Slot B if exists, otherwise Slot A)
   const activeDiamond = journey.diamondSlotB || journey.diamondSlotA;
   const diamondProg = calculateDiamondProgress(activeDiamond);
+
+  // Determine active prof diamond
+  const activeProfDiamond = journey.profDiamondSlotB || journey.profDiamondSlotA;
+  const profDiamondProg = calculateProfDiamondProgress(activeProfDiamond);
 
   const closuresCount = {
     diamond: journey.closures.some(c => c.module === 'diamond'),
@@ -91,8 +95,8 @@ export const PanoramaView: React.FC<PanoramaViewProps> = ({ user, journey, onNav
         </div>
       </div>
 
-      {/* Three Main Module Cards */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      {/* Four Module Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
         {/* Module 1: Mi Diamante */}
         <Card padding="lg" hoverable className="flex flex-col justify-between">
           <div>
@@ -142,6 +146,60 @@ export const PanoramaView: React.FC<PanoramaViewProps> = ({ user, journey, onNav
               className="justify-between"
             >
               <span>Abrir Mi Diamante</span>
+              <ArrowRight className="w-4 h-4" />
+            </Button>
+          </div>
+        </Card>
+
+        {/* Module 1b: Mi Diamante Profesional */}
+        <Card padding="lg" hoverable className="flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-10 h-10 rounded-xl bg-teal-50 border border-teal-200 text-teal-700 flex items-center justify-center">
+                <Sparkles className="w-5 h-5" />
+              </div>
+              <Badge variant={profDiamondProg.isClosed ? 'sage' : profDiamondProg.readyToClose ? 'terracotta' : 'neutral'}>
+                {profDiamondProg.isClosed
+                  ? 'Confirmado y cerrado'
+                  : profDiamondProg.readyToClose
+                  ? '8/8 Listo para cierre'
+                  : `${profDiamondProg.totalUnits}/8 En curso`}
+              </Badge>
+            </div>
+
+            <h3 className="font-editorial text-2xl text-ink font-normal mb-2">
+              Mi Diamante Profesional
+            </h3>
+            <p className="text-sm text-ink-muted leading-relaxed mb-4">
+              Cinco decisiones estratégicas profesionales y tres exploraciones del entorno, talentos y posibilidades.
+            </p>
+
+            <div className="space-y-2 py-3 border-y border-border-subtle text-xs text-ink">
+              <div className="flex justify-between">
+                <span className="text-ink-muted">Facetas activas:</span>
+                <span className="font-semibold text-teal-700">{profDiamondProg.facets} de 5</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-ink-muted">Requisitos estructurales:</span>
+                <span className="font-semibold">{profDiamondProg.totalUnits} de 8</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-ink-muted">Versión activa:</span>
+                <span className="font-semibold">
+                  {activeProfDiamond ? `v${activeProfDiamond.versionNumber} (${activeProfDiamond.status === 'closed' ? 'Fija' : 'Borrador'})` : 'Sin iniciar'}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-6 pt-2">
+            <Button
+              variant="outline"
+              fullWidth
+              onClick={() => onNavigate('diamante_profesional')}
+              className="justify-between"
+            >
+              <span>Abrir Diamante Profesional</span>
               <ArrowRight className="w-4 h-4" />
             </Button>
           </div>

@@ -2,6 +2,7 @@ import {
   UserProfile, 
   JourneyData, 
   DiamondVersion, 
+  ProfDiamondVersion,
   ContextKey, 
   Dimension, 
   ThresholdStatus, 
@@ -19,7 +20,12 @@ import {
   createEmptyJourney, 
   createSampleJourneyForAdminDemo 
 } from './seed';
-import { calculateDiamondProgress, calculateThresholdsProgress, calculateLettersProgress } from '../domain/completeness';
+import { 
+  calculateDiamondProgress, 
+  calculateProfDiamondProgress,
+  calculateThresholdsProgress, 
+  calculateLettersProgress 
+} from '../domain/completeness';
 import { createInitialThresholds, createInitialInterventions } from '../domain/constants';
 import { supabase, isSupabaseConfigured } from './supabase';
 
@@ -283,6 +289,65 @@ class DataRepository {
       }
     }
 
+    // 1b. Professional Diamond Versions
+    const { data: profVersions } = await supabase
+      .from('arq_prof_diamond_versions')
+      .select('*')
+      .eq('journey_id', journeyId)
+      .order('version_number', { ascending: true });
+
+    let profSlotA: ProfDiamondVersion | null = null;
+    let profSlotB: ProfDiamondVersion | null = null;
+
+    if (profVersions && profVersions.length > 0) {
+      for (const pvRow of profVersions) {
+        const { data: contextsData } = await supabase
+          .from('arq_prof_diamond_contexts')
+          .select('context_key, body')
+          .eq('version_id', pvRow.id);
+
+        const contexts: Record<ContextKey, string> = { entorno: '', talentos: '', posibilidades: '' };
+        if (contextsData) {
+          contextsData.forEach((c: any) => {
+            if (c.context_key in contexts) {
+              contexts[c.context_key as ContextKey] = c.body || '';
+            }
+          });
+        }
+
+        const { data: answersData } = await supabase
+          .from('arq_prof_diamond_answers')
+          .select('decision_index, body')
+          .eq('version_id', pvRow.id);
+
+        const professionalAnswers = ['', '', '', '', ''];
+        if (answersData) {
+          answersData.forEach((a: any) => {
+            if (a.decision_index >= 0 && a.decision_index < 5) {
+              professionalAnswers[a.decision_index] = a.body || '';
+            }
+          });
+        }
+
+        const assembledPv: ProfDiamondVersion = {
+          id: pvRow.id,
+          journeyId: pvRow.journey_id,
+          versionNumber: pvRow.version_number,
+          slot: pvRow.slot,
+          status: pvRow.status,
+          startedAt: pvRow.started_at,
+          closedAt: pvRow.closed_at || undefined,
+          confirmedBy: pvRow.confirmed_by || undefined,
+          contexts,
+          professionalAnswers,
+          revision: Number(pvRow.revision || 1)
+        };
+
+        if (pvRow.slot === 'A') profSlotA = assembledPv;
+        if (pvRow.slot === 'B') profSlotB = assembledPv;
+      }
+    }
+
     // 2. Thresholds
     const { data: thRows } = await supabase
       .from('arq_threshold_records')
@@ -366,6 +431,20 @@ class DataRepository {
       snapshotHash: c.snapshot_hash
     }));
 
+    if (!profSlotA) {
+      profSlotA = {
+        id: `dia-pro-${user.id}-v1`,
+        journeyId,
+        versionNumber: 1,
+        slot: 'A',
+        status: 'draft',
+        startedAt: new Date().toISOString(),
+        contexts: { entorno: '', talentos: '', posibilidades: '' },
+        professionalAnswers: ['', '', '', '', ''],
+        revision: 1
+      };
+    }
+
     return {
       id: journeyId,
       ownerId: user.id,
@@ -375,6 +454,8 @@ class DataRepository {
       updatedAt: jRow.updated_at,
       diamondSlotA: slotA,
       diamondSlotB: slotB,
+      profDiamondSlotA: profSlotA,
+      profDiamondSlotB: profSlotB,
       thresholds,
       interventions,
       letters,
@@ -853,6 +934,330 @@ class DataRepository {
           });
         } catch (e) {
           console.warn('[Supabase] Error calling arq_renew_diamond:', e);
+        }
+      })();
+    }
+
+    return { success: true };
+  }
+
+  // --- Professional Diamond API ---
+
+  public saveProfDiamondContext(slot: 'A' | 'B', key: ContextKey, value: string): boolean {
+    if (!this.currentUser) return false;
+    const journey = this.journeys.get(this.currentUser.id);
+    if (!journey) return false;
+
+    const targetVersion = slot === 'A' ? journey.profDiamondSlotA : journey.profDiamondSlotB;
+    if (!targetVersion || targetVersion.status === 'closed') return false;
+
+    const updatedVersion: ProfDiamondVersion = {
+      ...targetVersion,
+      contexts: {
+        ...targetVersion.contexts,
+        [key]: value
+      },
+      revision: targetVersion.revision + 1
+    };
+
+    const updatedJourney: JourneyData = {
+      ...journey,
+      profDiamondSlotA: slot === 'A' ? updatedVersion : journey.profDiamondSlotA,
+      profDiamondSlotB: slot === 'B' ? updatedVersion : journey.profDiamondSlotB,
+      updatedAt: new Date().toISOString()
+    };
+
+    this.journeys.set(journey.ownerId, updatedJourney);
+    this.persistLocal();
+
+    this.debouncedSaveProfDiamondContext(targetVersion.id, key, value);
+    return true;
+  }
+
+  private debouncedSaveProfDiamondContext = debounce(async (versionId: string, key: ContextKey, value: string) => {
+    if (!isSupabaseConfigured) return;
+    try {
+      await supabase.from('arq_prof_diamond_contexts').upsert({
+        version_id: versionId,
+        context_key: key,
+        body: value,
+        updated_at: new Date().toISOString()
+      });
+    } catch (err) {
+      console.warn('[Supabase] Error saving prof diamond context:', err);
+    }
+  }, 400);
+
+  public saveProfDiamondChoice(slot: 'A' | 'B', index: number, value: string): boolean {
+    if (!this.currentUser) return false;
+    const journey = this.journeys.get(this.currentUser.id);
+    if (!journey) return false;
+
+    const targetVersion = slot === 'A' ? journey.profDiamondSlotA : journey.profDiamondSlotB;
+    if (!targetVersion || targetVersion.status === 'closed') return false;
+
+    const newProfessional = [...targetVersion.professionalAnswers];
+    newProfessional[index] = value;
+
+    const updatedVersion: ProfDiamondVersion = {
+      ...targetVersion,
+      professionalAnswers: newProfessional,
+      revision: targetVersion.revision + 1
+    };
+
+    const updatedJourney: JourneyData = {
+      ...journey,
+      profDiamondSlotA: slot === 'A' ? updatedVersion : journey.profDiamondSlotA,
+      profDiamondSlotB: slot === 'B' ? updatedVersion : journey.profDiamondSlotB,
+      updatedAt: new Date().toISOString()
+    };
+
+    this.journeys.set(journey.ownerId, updatedJourney);
+    this.persistLocal();
+
+    this.debouncedSaveProfDiamondChoice(targetVersion.id, index, value);
+    return true;
+  }
+
+  private debouncedSaveProfDiamondChoice = debounce(async (versionId: string, index: number, value: string) => {
+    if (!isSupabaseConfigured) return;
+    try {
+      await supabase.from('arq_prof_diamond_answers').upsert({
+        version_id: versionId,
+        decision_index: index,
+        body: value,
+        updated_at: new Date().toISOString()
+      });
+    } catch (err) {
+      console.warn('[Supabase] Error saving prof diamond choice:', err);
+    }
+  }, 400);
+
+  public closeProfDiamond(slot: 'A' | 'B'): { success: boolean; error?: string } {
+    if (!this.currentUser) return { success: false, error: 'No autenticado.' };
+    const journey = this.journeys.get(this.currentUser.id);
+    if (!journey) return { success: false, error: 'Recorrido no encontrado.' };
+
+    const version = slot === 'A' ? journey.profDiamondSlotA : journey.profDiamondSlotB;
+    if (!version) return { success: false, error: 'Versión inexistente.' };
+    if (version.status === 'closed') return { success: false, error: 'Esta versión ya fue confirmada y cerrada.' };
+
+    const progress = calculateProfDiamondProgress(version);
+    if (!progress.readyToClose) {
+      return { 
+        success: false, 
+        error: `Requisitos incompletos (${progress.totalUnits}/8). Se deben responder las 3 exploraciones y las 5 decisiones profesionales.` 
+      };
+    }
+
+    const now = new Date().toISOString();
+    const closedVersion: ProfDiamondVersion = {
+      ...version,
+      status: 'closed',
+      closedAt: now,
+      confirmedBy: this.currentUser.id
+    };
+
+    const closure: ModuleClosure = {
+      id: 'cls-dia-pro-' + Date.now(),
+      journeyId: journey.id,
+      module: 'diamond_pro',
+      editionNo: closedVersion.versionNumber,
+      diamondVersionId: closedVersion.id,
+      closedAt: now,
+      confirmedBy: this.currentUser.id,
+      snapshot: JSON.parse(JSON.stringify(closedVersion)),
+      snapshotHash: 'hash-' + closedVersion.id + '-' + Date.now()
+    };
+
+    const updatedJourney: JourneyData = {
+      ...journey,
+      profDiamondSlotA: slot === 'A' ? closedVersion : journey.profDiamondSlotA,
+      profDiamondSlotB: slot === 'B' ? closedVersion : journey.profDiamondSlotB,
+      closures: [...journey.closures, closure],
+      updatedAt: now
+    };
+
+    this.journeys.set(journey.ownerId, updatedJourney);
+    this.persistLocal();
+
+    this.logAudit(
+      'PROF_DIAMOND_CLOSED', 
+      'prof_diamond_version', 
+      closedVersion.id, 
+      `Confirmado y cerrado Diamante Profesional versión ${closedVersion.versionNumber} (Slot ${slot})`,
+      journey.id
+    );
+
+    // Remote persistence
+    if (isSupabaseConfigured) {
+      (async () => {
+        try {
+          await supabase.from('arq_prof_diamond_versions').update({
+            status: 'closed',
+            closed_at: now,
+            confirmed_by: this.currentUser!.id
+          }).eq('id', closedVersion.id);
+
+          await supabase.from('arq_module_closures').insert({
+            journey_id: journey.id,
+            module: 'diamond_pro',
+            edition_no: closedVersion.versionNumber,
+            diamond_version_id: closedVersion.id,
+            snapshot: closedVersion,
+            snapshot_hash: closure.snapshotHash,
+            confirmed_by: this.currentUser!.id,
+            closed_at: now
+          });
+        } catch (e) {
+          console.warn('[Supabase] Error persisting prof diamond closure:', e);
+        }
+      })();
+    }
+
+    return { success: true };
+  }
+
+  public createSecondProfDiamondVersion(): { success: boolean; error?: string } {
+    if (!this.currentUser) return { success: false, error: 'No autenticado.' };
+    const journey = this.journeys.get(this.currentUser.id);
+    if (!journey) return { success: false, error: 'Recorrido no encontrado.' };
+
+    if (!journey.profDiamondSlotA || journey.profDiamondSlotA.status !== 'closed') {
+      return { success: false, error: 'Debes confirmar y fijar tu versión inicial antes de crear una actualización.' };
+    }
+    if (journey.profDiamondSlotB) {
+      return { success: false, error: 'Ya existe una segunda versión en curso.' };
+    }
+
+    const v2Id = `dia-pro-${this.currentUser.id}-v2`;
+    const v2: ProfDiamondVersion = {
+      id: v2Id,
+      journeyId: journey.id,
+      versionNumber: 2,
+      slot: 'B',
+      status: 'draft',
+      startedAt: new Date().toISOString(),
+      contexts: { entorno: '', talentos: '', posibilidades: '' },
+      professionalAnswers: ['', '', '', '', ''],
+      revision: 1
+    };
+
+    const updatedJourney: JourneyData = {
+      ...journey,
+      profDiamondSlotB: v2,
+      updatedAt: new Date().toISOString()
+    };
+
+    this.journeys.set(journey.ownerId, updatedJourney);
+    this.persistLocal();
+
+    this.logAudit('PROF_DIAMOND_V2_CREATED', 'prof_diamond_version', v2.id, 'Creación de segunda versión temporal de Diamante Profesional (Slot B)', journey.id);
+
+    if (isSupabaseConfigured) {
+      (async () => {
+        try {
+          const { data, error } = await supabase.from('arq_prof_diamond_versions').insert({
+            journey_id: journey.id,
+            version_number: 2,
+            slot: 'B',
+            status: 'draft',
+            revision: 1
+          }).select().single();
+
+          if (data && !error) {
+            v2.id = data.id;
+            this.persistLocal();
+          }
+        } catch (e) {
+          console.warn('[Supabase] Error creating prof diamond v2:', e);
+        }
+      })();
+    }
+
+    return { success: true };
+  }
+
+  public renewProfDiamondAtomic(idempotencyKey: string): { success: boolean; error?: string } {
+    if (!this.currentUser) return { success: false, error: 'No autenticado.' };
+    const journey = this.getJourney();
+    if (!journey) return { success: false, error: 'Recorrido no encontrado.' };
+
+    if (!journey.profDiamondSlotA || journey.profDiamondSlotA.status !== 'closed' ||
+        !journey.profDiamondSlotB || journey.profDiamondSlotB.status !== 'closed') {
+      return { success: false, error: 'Ambas versiones del Diamante Profesional deben estar cerradas y confirmadas para iniciar un nuevo ciclo.' };
+    }
+
+    const existingConsent = this.replacementConsents.find(c => c.idempotencyKey === idempotencyKey);
+    if (existingConsent) {
+      return { success: true };
+    }
+
+    const oldA = journey.profDiamondSlotA;
+    const recentB = journey.profDiamondSlotB;
+    const nextVersionNum = Math.max(oldA.versionNumber, recentB.versionNumber) + 1;
+
+    // 1. Mover Slot B a Slot A
+    const movedA: ProfDiamondVersion = {
+      ...recentB,
+      slot: 'A'
+    };
+
+    // 2. Crear nueva vN en Slot B
+    const newB: ProfDiamondVersion = {
+      id: `dia-pro-${this.currentUser.id}-v${nextVersionNum}`,
+      journeyId: journey.id,
+      versionNumber: nextVersionNum,
+      slot: 'B',
+      status: 'draft',
+      startedAt: new Date().toISOString(),
+      contexts: { entorno: '', talentos: '', posibilidades: '' },
+      professionalAnswers: ['', '', '', '', ''],
+      revision: 1
+    };
+
+    const updatedJourney: JourneyData = {
+      ...journey,
+      profDiamondSlotA: movedA,
+      profDiamondSlotB: newB,
+      updatedAt: new Date().toISOString()
+    };
+
+    this.journeys.set(journey.ownerId, updatedJourney);
+
+    const consent: ReplacementConsent = {
+      id: 'cst-pro-' + Date.now(),
+      journeyId: journey.id,
+      oldVersionId: oldA.id,
+      recentVersionId: recentB.id,
+      newVersionId: newB.id,
+      consentedAt: new Date().toISOString(),
+      idempotencyKey,
+      actorEmail: this.currentUser.email
+    };
+    this.replacementConsents.push(consent);
+    this.persistLocal();
+
+    this.logAudit(
+      'PROF_DIAMOND_RENEWAL', 
+      'prof_diamond_version', 
+      newB.id, 
+      `Sustitución consentida: Diamante Profesional v${oldA.versionNumber} reemplazada; v${recentB.versionNumber} pasa a Slot A; nueva v${nextVersionNum} en Slot B`,
+      journey.id
+    );
+
+    // Call stored procedure on Supabase
+    if (isSupabaseConfigured) {
+      (async () => {
+        try {
+          await supabase.rpc('arq_renew_prof_diamond', {
+            p_journey_id: journey.id,
+            p_old_version_id: oldA.id,
+            p_recent_version_id: recentB.id,
+            p_idempotency_key: idempotencyKey
+          });
+        } catch (e) {
+          console.warn('[Supabase] Error calling arq_renew_prof_diamond:', e);
         }
       })();
     }

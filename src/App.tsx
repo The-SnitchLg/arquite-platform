@@ -5,6 +5,7 @@ import { AppHeader, NavTab } from './components/layout/AppHeader';
 import { AuthView } from './features/auth/AuthView';
 import { PanoramaView } from './features/panorama/PanoramaView';
 import { DiamondView } from './features/diamond/DiamondView';
+import { ProfDiamondView } from './features/diamond/ProfDiamondView';
 import { ThresholdsView } from './features/thresholds/ThresholdsView';
 import { InterventionsView } from './features/interventions/InterventionsView';
 import { LettersView } from './features/letters/LettersView';
@@ -62,6 +63,13 @@ export const App: React.FC = () => {
 
         {activeTab === 'diamante' && (
           <DiamondView
+            journey={journey}
+            onNavigateToReports={() => setActiveTab('informes')}
+          />
+        )}
+
+        {activeTab === 'diamante_profesional' && (
+          <ProfDiamondView
             journey={journey}
             onNavigateToReports={() => setActiveTab('informes')}
           />

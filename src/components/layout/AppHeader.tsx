@@ -5,6 +5,7 @@ import { LogOut, Shield, Compass, Sparkles, BookOpen, FileText, LayoutDashboard,
 export type NavTab = 
   | 'panorama' 
   | 'diamante' 
+  | 'diamante_profesional'
   | 'umbrales' 
   | 'intervenciones' 
   | 'cartas' 
@@ -31,6 +32,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   const navItems = [
     { id: 'panorama' as NavTab, label: 'Panorama', icon: Compass },
     { id: 'diamante' as NavTab, label: 'Mi Diamante', icon: Sparkles },
+    { id: 'diamante_profesional' as NavTab, label: 'Mi Diamante Profesional', icon: Sparkles },
     { id: 'umbrales' as NavTab, label: 'Siete Umbrales', icon: Sliders },
     { id: 'intervenciones' as NavTab, label: 'Ruta de Intervención', icon: BookOpen },
     { id: 'cartas' as NavTab, label: 'Cartas al Futuro', icon: FileText },

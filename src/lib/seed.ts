@@ -42,6 +42,22 @@ export function createEmptyJourney(user: UserProfile): JourneyData {
       revision: 1
     },
     diamondSlotB: null,
+    profDiamondSlotA: {
+      id: `dia-pro-${user.id}-v1`,
+      journeyId: `jrn-${user.id}`,
+      versionNumber: 1,
+      slot: 'A',
+      status: 'draft',
+      startedAt: new Date().toISOString(),
+      contexts: {
+        entorno: '',
+        talentos: '',
+        posibilidades: ''
+      },
+      professionalAnswers: ['', '', '', '', ''],
+      revision: 1
+    },
+    profDiamondSlotB: null,
     thresholds: createInitialThresholds(),
     interventions: createInitialInterventions(),
     letters: {
@@ -208,6 +224,45 @@ export function createSampleJourneyForAdminDemo(): JourneyData {
     confirmedBy: DEMO_PARTICIPANT.id,
     snapshot: journey.letters,
     snapshotHash: 'hash-let-v1-verified'
+  });
+
+  // Populate sample Professional Diamond (v1 closed)
+  journey.profDiamondSlotA = {
+    id: 'dia-pro-part-v1',
+    journeyId: journey.id,
+    versionNumber: 1,
+    slot: 'A',
+    status: 'closed',
+    startedAt: '2026-10-15T08:00:00.000Z',
+    closedAt: '2026-10-28T18:45:00.000Z',
+    confirmedBy: DEMO_PARTICIPANT.id,
+    contexts: {
+      entorno: 'Entorno de alta exigencia estratégica con expansión acelerada de equipos interdisciplinarios y necesidad de gobernanza clara.',
+      talentos: 'Capacidad analítica para descomponer sistemas complejos, articular visiones compartidas y crear entornos de confianza.',
+      posibilidades: 'Transitar de la consultoría reactiva a la dirección de plataformas de desarrollo de liderazgo e innovación estratégica.'
+    },
+    professionalAnswers: [
+      'Posicionar a mi organización como el referente indiscutible de pensamiento estratégico y arquitectura de liderazgo en la región.',
+      'Enfoque en alta dirección y organizaciones con propósito; rechazar contratos masivos sin compromiso genuino de transformación.',
+      'Metodologías de arquitectura estratégica integrales y acompañamiento personalizado de máxima excelencia editorial.',
+      'Profundidad conceptual en teoría de decisiones, diseño de experiencias ejecutivas y rigor metodológico.',
+      'Comité trimestral de balance estratégico y tablero de impacto con indicadores cualitativos y de sostenibilidad.'
+    ],
+    revision: 3
+  };
+  journey.profDiamondSlotB = null;
+
+  // Add closure for Professional Diamond
+  journey.closures.push({
+    id: 'cls-dia-pro-v1',
+    journeyId: journey.id,
+    module: 'diamond_pro',
+    editionNo: 1,
+    diamondVersionId: 'dia-pro-part-v1',
+    closedAt: '2026-10-28T18:45:00.000Z',
+    confirmedBy: DEMO_PARTICIPANT.id,
+    snapshot: JSON.parse(JSON.stringify(journey.profDiamondSlotA)),
+    snapshotHash: 'hash-pro-part-v1-verified'
   });
 
   return journey;

@@ -44,6 +44,7 @@ export const AdminView: React.FC<AdminViewProps> = () => {
   // Metrics
   const totalParticipants = receipts.length;
   const closedDiamonds = receipts.filter(j => j.closures.some(c => c.module === 'diamond')).length;
+  const closedProfDiamonds = receipts.filter(j => j.closures.some(c => c.module === 'diamond_pro')).length;
   const closedThresholds = receipts.filter(j => j.closures.some(c => c.module === 'thresholds')).length;
   const closedLetters = receipts.filter(j => j.closures.some(c => c.module === 'letters')).length;
 
@@ -110,7 +111,7 @@ export const AdminView: React.FC<AdminViewProps> = () => {
       </div>
 
       {/* KPI Cards Strip */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
         <Card padding="md">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold uppercase tracking-wider text-ink-muted">Participantes</span>
@@ -127,6 +128,15 @@ export const AdminView: React.FC<AdminViewProps> = () => {
           </div>
           <p className="text-3xl font-bold text-ink mt-2">{closedDiamonds}</p>
           <span className="text-[11px] text-ink-muted block mt-1">13/13 confirmados</span>
+        </Card>
+
+        <Card padding="md">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold uppercase tracking-wider text-ink-muted">Diamantes Pro</span>
+            <Sparkles className="w-4 h-4 text-teal-700" />
+          </div>
+          <p className="text-3xl font-bold text-ink mt-2">{closedProfDiamonds}</p>
+          <span className="text-[11px] text-ink-muted block mt-1">8/8 confirmados</span>
         </Card>
 
         <Card padding="md">
@@ -171,6 +181,7 @@ export const AdminView: React.FC<AdminViewProps> = () => {
                   <tr>
                     <th className="py-3.5 px-4">Participante</th>
                     <th className="py-3.5 px-4">Diamante (Slot A / B)</th>
+                    <th className="py-3.5 px-4">Diamante Pro</th>
                     <th className="py-3.5 px-4">Siete Umbrales</th>
                     <th className="py-3.5 px-4">Cartas</th>
                     <th className="py-3.5 px-4">Última Actividad</th>
@@ -181,6 +192,8 @@ export const AdminView: React.FC<AdminViewProps> = () => {
                   {filteredReceipts.map(journey => {
                     const diaA = journey.diamondSlotA;
                     const diaB = journey.diamondSlotB;
+                    const profA = journey.profDiamondSlotA;
+                    const profB = journey.profDiamondSlotB;
                     const hasClosedThr = journey.closures.some(c => c.module === 'thresholds');
                     const hasClosedLet = journey.closures.some(c => c.module === 'letters');
 
@@ -205,6 +218,24 @@ export const AdminView: React.FC<AdminViewProps> = () => {
                               <div className="flex items-center gap-1.5">
                                 <Badge variant={diaB.status === 'closed' ? 'sage' : 'neutral'}>
                                   v{diaB.versionNumber} {diaB.status === 'closed' ? 'Cerrada' : 'Borrador'}
+                                </Badge>
+                              </div>
+                            )}
+                          </div>
+                        </td>
+                        <td className="py-4 px-4">
+                          <div className="space-y-1">
+                            {profA && (
+                              <div className="flex items-center gap-1.5">
+                                <Badge variant={profA.status === 'closed' ? 'sage' : 'neutral'}>
+                                  v{profA.versionNumber} {profA.status === 'closed' ? 'Cerrada' : 'Borrador'}
+                                </Badge>
+                              </div>
+                            )}
+                            {profB && (
+                              <div className="flex items-center gap-1.5">
+                                <Badge variant={profB.status === 'closed' ? 'sage' : 'neutral'}>
+                                  v{profB.versionNumber} {profB.status === 'closed' ? 'Cerrada' : 'Borrador'}
                                 </Badge>
                               </div>
                             )}
@@ -321,6 +352,43 @@ export const AdminView: React.FC<AdminViewProps> = () => {
                     <p>Iniciado: {new Date(selectedJourney.diamondSlotB.startedAt).toLocaleDateString()}</p>
                     {selectedJourney.diamondSlotB.closedAt && (
                       <p>Cerrado: {new Date(selectedJourney.diamondSlotB.closedAt).toLocaleDateString()}</p>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Professional Diamond Overview */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="p-4 bg-teal-50/50 rounded-xl border border-teal-100 space-y-2">
+                <div className="flex justify-between items-center">
+                  <span className="text-xs font-semibold uppercase text-teal-800">Diamante Pro Slot A</span>
+                  <Badge variant={selectedJourney.profDiamondSlotA?.status === 'closed' ? 'sage' : 'neutral'}>
+                    v{selectedJourney.profDiamondSlotA?.versionNumber || 1} {selectedJourney.profDiamondSlotA?.status}
+                  </Badge>
+                </div>
+                {selectedJourney.profDiamondSlotA && (
+                  <div className="text-xs text-ink space-y-1">
+                    <p>Iniciado: {new Date(selectedJourney.profDiamondSlotA.startedAt).toLocaleDateString()}</p>
+                    {selectedJourney.profDiamondSlotA.closedAt && (
+                      <p>Cerrado: {new Date(selectedJourney.profDiamondSlotA.closedAt).toLocaleDateString()}</p>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              <div className="p-4 bg-teal-50/50 rounded-xl border border-teal-100 space-y-2">
+                <div className="flex justify-between items-center">
+                  <span className="text-xs font-semibold uppercase text-teal-800">Diamante Pro Slot B</span>
+                  <Badge variant={selectedJourney.profDiamondSlotB?.status === 'closed' ? 'sage' : 'neutral'}>
+                    {selectedJourney.profDiamondSlotB ? `v${selectedJourney.profDiamondSlotB.versionNumber} ${selectedJourney.profDiamondSlotB.status}` : 'Sin crear'}
+                  </Badge>
+                </div>
+                {selectedJourney.profDiamondSlotB && (
+                  <div className="text-xs text-ink space-y-1">
+                    <p>Iniciado: {new Date(selectedJourney.profDiamondSlotB.startedAt).toLocaleDateString()}</p>
+                    {selectedJourney.profDiamondSlotB.closedAt && (
+                      <p>Cerrado: {new Date(selectedJourney.profDiamondSlotB.closedAt).toLocaleDateString()}</p>
                     )}
                   </div>
                 )}
